@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Adnan Khan — Operations, Systems & Digital Execution</title>
+<meta name="description" content="Mohammad Adnan Khan — Operations Head, Business Systems & Web Developer. Interactive experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================= ROOT / THEME ============================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth; overflow-x:hidden; max-width:100%;}
+
+:root{
+  --bg:            #070A12;
+  --bg-elev:       #0D1220;
+  --panel:         #111828;
+  --panel-2:       #151d30;
+  --line:          rgba(148,163,184,0.14);
+  --line-strong:   rgba(148,163,184,0.28);
+  --teal:          #14B8A6;
+  --teal-soft:     rgba(20,184,166,0.15);
+  --gold:          #D2A24C;
+  --gold-soft:     rgba(210,162,76,0.15);
+  --text:          #E8ECF4;
+  --text-dim:      #97A2B8;
+  --text-faint:    #5C6478;
+  --shadow:        0 20px 60px rgba(0,0,0,0.5);
+  --radius:        14px;
+  --font-display:  'Fraunces', Georgia, serif;
+  --font-body:     'Manrope', sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+}
+
+body.light{
+  --bg:            #F4F1EA;
+  --bg-elev:       #FFFFFF;
+  --panel:         #FFFFFF;
+  --panel-2:       #FBF9F4;
+  --line:          rgba(30,41,59,0.12);
+  --line-strong:   rgba(30,41,59,0.24);
+  --teal:          #0D9488;
+  --teal-soft:     rgba(13,148,136,0.10);
+  --gold:          #B0791E;
+  --gold-soft:     rgba(176,121,30,0.12);
+  --text:          #1B2333;
+  --text-dim:      #5B6478;
+  --text-faint:    #93997F00;
+  --shadow:        0 20px 50px rgba(30,41,59,0.12);
+}
+
+body{
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  cursor: none;
+  transition: background .5s ease, color .5s ease;
+}
+body.no-custom-cursor{cursor:auto;}
+::selection{ background: var(--teal); color: #05130f; }
+
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:none; border:none; background:none; color:inherit;}
+ul{list-style:none;}
+img{max-width:100%; display:block;}
+
+.wrap{ max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.eyebrow{
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:26px; height:1px; background: var(--teal); }
+.section-title{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 14px 0 8px;
+  letter-spacing: -0.01em;
+}
+.section-sub{
+  color: var(--text-dim);
+  max-width: 560px;
+  font-size: .98rem;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+section{ position: relative; padding: 120px 0; }
+.section-head{ position: relative; z-index:2; }
+
+/* ============================= CUSTOM CURSOR ============================= */
+#cursor-dot, #cursor-ring{
+  position: fixed; top:0; left:0; pointer-events:none; z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  will-change: transform;
+}
+#cursor-dot{ width:6px; height:6px; background: var(--gold); }
+#cursor-ring{ width:34px; height:34px; border:1px solid var(--teal); transition: width .2s,height .2s, border-color .2s, background .2s; }
+#cursor-ring.hover{ width:56px; height:56px; background: var(--teal-soft); border-color: var(--teal); }
+@media (hover:none), (pointer:coarse){
+  #cursor-dot,#cursor-ring{ display:none; }
+  body{ cursor:auto; }
+}
+
+/* ============================= LOADER ============================= */
+#loader{
+  position: fixed; inset:0; z-index: 10000;
+  background: var(--bg);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap: 28px;
+  transition: opacity .7s ease, visibility .7s ease;
+}
+#loader.done{ opacity:0; visibility:hidden; pointer-events:none; }
+.loader-mark{
+  font-family: var(--font-display);
+  font-size: 5.2rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--teal);
+  position: relative;
+}
+.loader-mark::after{
+  content: 'AK';
+  position:absolute; left:0; top:0;
+  color: var(--gold);
+  -webkit-text-stroke: 0;
+  width: 0%;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: fillLetters 1.8s ease forwards .2s;
+}
+@keyframes fillLetters{ to{ width:100%; } }
+.loader-bar-track{ width: 220px; height:2px; background: var(--line-strong); border-radius:2px; overflow:hidden; }
+.loader-bar{ height:100%; width:0%; background: linear-gradient(90deg,var(--teal),var(--gold)); animation: loadbar 2s ease forwards .1s; }
+@keyframes loadbar{ to{ width:100%; } }
+.loader-text{ font-family: var(--font-mono); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color: var(--text-faint); }
+
+/* ============================= FLOATING DOCK NAV ============================= */
+#dock{
+  position: fixed; bottom: 22px; left:50%; transform: translateX(-50%);
+  z-index: 500;
+  display:flex; align-items:flex-end; gap: 6px;
+  padding: 10px 14px;
+  background: rgba(17,24,40,0.65);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--line-strong);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+body.light #dock{ background: rgba(255,255,255,0.7); }
+.dock-item{
+  width:42px; height:42px; border-radius: 12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.05rem;
+  background: transparent;
+  transition: transform .18s ease, background .18s ease;
+  position: relative;
+}
+.dock-item:hover{ background: var(--teal-soft); }
+.dock-item .tip{
+  position:absolute; bottom: 54px; left:50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size:.62rem; letter-spacing:.06em;
+  background: var(--panel); border:1px solid var(--line-strong); padding:4px 8px; border-radius:6px;
+  white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease;
+}
+.dock-item:hover .tip{ opacity:1; transform: translateX(-50%) translateY(-4px); }
+#dock-toggle{
+  width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background: var(--gold-soft); font-size:1.1rem; margin-left:4px;
+}
+
+/* ============================= HERO ============================= */
+#hero{
+  position: relative; min-height: 100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  overflow: hidden; padding: 40px 24px;
+}
+#hero-canvas{ position:absolute; inset:0; z-index:0; opacity:.7; }
+#hero-grid{
+  position:absolute; inset:-2px; z-index:0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 10%, transparent 75%);
+  animation: gridpan 26s linear infinite;
+}
+@keyframes gridpan{ from{ background-position: 0 0,0 0;} to{ background-position: 46px 46px, 46px 46px;} }
+#hero-glow{
+  position: absolute; width: 480px; height:480px; border-radius:50%;
+  background: radial-gradient(circle, var(--teal-soft), transparent 70%);
+  pointer-events:none; z-index:1; filter: blur(10px);
+  transform: translate(-50%,-50%);
+  transition: opacity .3s ease;
+}
+.hero-inner{ position: relative; z-index: 3; text-align:center; max-width: 820px; }
+.hero-kicker{
+  font-family: var(--font-mono); font-size:.75rem; letter-spacing:.28em; text-transform:uppercase;
+  color: var(--gold); margin-bottom: 22px; display:inline-flex; align-items:center; gap:10px;
+  border: 1px solid var(--line-strong); padding: 7px 16px; border-radius: 999px;
+  background: var(--panel);
+}
+.hero-kicker .dot{ width:6px; height:6px; border-radius:50%; background: var(--teal); box-shadow:0 0 10px var(--teal); animation: pulse 2s infinite; }
+@keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+.hero-title{
+  font-family: var(--font-display); font-weight:600;
+  font-size: clamp(2.6rem, 7vw, 5.4rem); line-height:1.02; letter-spacing:-0.02em;
+  margin-bottom: 18px;
+}
+.hero-title em{ font-style: italic; font-weight:500; color: var(--teal); }
+.hero-role{
+  font-family: var(--font-mono); font-size: clamp(.85rem,1.6vw,1.05rem);
+  color: var(--text-dim); letter-spacing:.03em; min-height: 1.6em; margin-bottom: 40px;
+}
+.hero-role .caret{ display:inline-block; width:2px; background:var(--gold); animation: blink 1s steps(1) infinite; margin-left:2px; height:1em; vertical-align:-3px;}
+@keyframes blink{ 50%{ opacity:0; } }
+.hero-ctas{ display:flex; flex-wrap:wrap; gap: 14px; justify-content:center; }
+.btn{
+  font-family: var(--font-mono); font-size:.82rem; letter-spacing:.03em;
+  padding: 15px 26px; border-radius: 10px; display:inline-flex; align-items:center; gap:10px;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s;
+  border: 1px solid var(--line-strong);
+}
+.btn-primary{ background: var(--teal); color:#04150F; font-weight:700; border-color: transparent;}
+.btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,184,166,.35); }
+.btn-ghost{ background: var(--panel); color: var(--text); }
+.btn-ghost:hover{ border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+.magnetic{ will-change: transform; }
+.scroll-cue{
+  position:absolute; bottom: 34px; left:50%; transform:translateX(-50%);
+  font-family: var(--font-mono); font-size:.62rem; color: var(--text-faint); letter-spacing:.2em;
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:3;
+}
+.scroll-cue .line{ width:1px; height: 34px; background: linear-gradient(var(--teal), transparent); animation: scrolldown 1.6s infinite; }
+@keyframes scrolldown{ 0%{ transform: scaleY(0); transform-origin: top;} 50%{ transform: scaleY(1); transform-origin: top;} 50.01%{ transform-origin: bottom;} 100%{ transform: scaleY(0); transform-origin: bottom;} }
+
+/* ============================= ABOUT / FLIP CARD ============================= */
+#about{ }
+.about-grid{ display:grid; grid-template-columns: 340px 1fr; gap: 64px; align-items:center; }
+@media (max-width: 860px){ .about-grid{ grid-template-columns: 1fr; } }
+.flip-scene{ perspective: 1600px; width: 100%; max-width: 320px; margin: 0 auto; aspect-ratio: 3/4; }
+.flip-card{
+  position: relative; width:100%; height:100%; transition: transform .8s cubic-bezier(.2,.9,.2,1);
+  transform-style: preserve-3d; cursor: none;
+}
+.flip-scene.flipped .flip-card{ transform: rotateY(180deg); }
+.flip-face{
+  position:absolute; inset:0; backface-visibility:hidden; border-radius: 20px;
+  border: 1px solid var(--line-strong); overflow:hidden;
+  box-shadow: var(--shadow);
+  display:flex; flex-direction:column;
+}
+.flip-front{
+  background: linear-gradient(165deg, var(--panel), var(--panel-2));
+  align-items:center; justify-content:center; text-align:center; gap: 18px; padding: 30px;
+}
+.avatar-ring{
+  width:132px; height:132px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: conic-gradient(from 0deg, var(--teal), var(--gold), var(--teal));
+  animation: spinring 6s linear infinite;
+  padding: 4px;
+}
+@keyframes spinring{ to{ transform: rotate(360deg); } }
+.avatar-inner{
+  width:100%; height:100%; border-radius:50%; background: var(--bg-elev);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display); font-size:2.6rem; font-weight:600; color: var(--gold);
+}
+.flip-front h3{ font-family: var(--font-display); font-size:1.5rem; font-weight:600; }
+.flip-front p{ font-family: var(--font-mono); font-size:.72rem; color: var(--teal); letter-spacing:.08em; text-transform:uppercase; }
+.flip-hint{ font-family: var(--font-mono); font-size:.6rem; color: var(--text-faint); letter-spacing:.1em; text-transform:uppercase; margin-top: 4px; }
+.flip-back{
+  background: var(--panel); transform: rotateY(180deg); padding: 26px; justify-content:center; gap: 14px;
+}
+.flip-back .fb-row{ display:flex; justify-content:space-between; border-bottom: 1px dashed var(--line); padding-bottom:8px; font-size:.82rem; }
+.flip-back .fb-row b{ color: var(--text-dim); font-weight:500; font-family:var(--font-mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.05em;}
+.flip-back .fb-fact{ font-size:.8rem; color: var(--text-dim); line-height:1.5; font-style: italic; margin-top: 6px;}
+
+.about-copy .lede{ font-family: var(--font-display); font-size: 1.5rem; font-style: italic; font-weight:500; line-height:1.4; color: var(--text); margin-bottom: 22px; }
+.about-copy p{ color: var(--text-dim); line-height: 1.8; font-size:.98rem; margin-bottom: 14px; }
+.about-tags{ display:flex; flex-wrap:wrap; gap:9px; margin-top: 22px; }
+.about-tags span{
+  font-family: var(--font-mono); font-size:.68rem; padding: 7px 13px; border-radius: 999px;
+  border: 1px solid var(--line-strong); color: var(--text-dim);
+}
+
+/* ============================= PROJECT LAB ============================= */
+.lab-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 22px; }
+.folder{
+  background: var(--panel); border:1px solid var(--line-strong); border-radius: var(--radius);
+  padding: 26px 22px; position: relative; overflow:hidden; cursor:none;
+  transition: transform .3s ease, border-color .3s ease;
+}
+.folder:hover{ transform: translateY(-6px); border-color: var(--teal); }
+.folder::before{
+  content:''; position:absolute; top:0; left:0; width:100%; height:4px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transform: scaleX(0); transform-origin:left; transition: transform .35s ease;
+}
+.folder:hover::before{ transform: scaleX(1); }
+.folder-icon{ font-size: 2rem; margin-bottom: 16px; }
+.folder h4{ font-family: var(--font-display); font-size: 1.2rem; font-weight:600; margin-bottom:6px; }
+.folder .fdesc{ color: var(--text-dim); font-size: .82rem; line-height:1.6; margin-bottom:16px; }
+.folder .fmeta{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.65rem; color: var(--text-faint); border-top: 1px dashed var(--line); padding-top:12px;}
+.folder .flive{
+  display:inline-block; margin-top:12px; font-family:var(--font-mono); font-size:.68rem;
+  color: var(--teal); border:1px solid var(--line-strong); padding:6px 10px; border-radius:8px;
+  transition: background .18s ease, border-color .18s ease;
+}
+.folder .flive:hover{ background: var(--teal-soft); border-color: var(--teal); }
+.folder .fmeta b{ color: var(--gold); }
+
+/* modal */
+.modal-overlay{
+  position: fixed; inset:0; z-index: 3000; background: rgba(4,6,12,0.78); backdrop-filter: blur(6px);
+  display:flex; align-items:center; justify-content:center; padding: 24px;
+  opacity:0; pointer-events:none; transition: opacity .3s ease;
+}
+.modal-overlay.active{ opacity:1; pointer-events:auto; }
+.modal-box{
+  background: var(--panel); border:1px solid var(--line-strong); border-radius: 20px;
+  max-width: 640px; width:100%; max-height: 84vh; overflow-y:auto; padding: 38px;
+  transform: scale(.92) translateY(20px); transition: transform .35s cubic-bezier(.2,.9,.2,1);
+  box-shadow: var(--shadow);
+}
+.modal-overlay.active .modal-box{ transform: scale(1) translateY(0); }
+.modal-close{ position: absolute; top: 22px; right: 26px; font-size:1.4rem; color: var(--text-dim); cursor:none; }
+.modal-box h3{ font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 4px; }
+.modal-box .m-period{ font-family: var(--font-mono); color: var(--gold); font-size:.72rem; margin-bottom: 20px; display:block;}
+.modal-box .m-section{ margin-bottom: 18px; }
+.modal-box .m-label{ font-family: var(--font-mono); font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color: var(--teal); margin-bottom: 8px;}
+.modal-box ul{ display:flex; flex-direction:column; gap:8px; }
+.modal-box li{ font-size:.9rem; color: var(--text-dim); line-height:1.6; padding-left:16px; position:relative;}
+.modal-box li::before{ content:'→'; position:absolute; left:0; color: var(--teal); }
+.m-stats{ display:flex; gap:10px; flex-wrap:wrap; }
+.m-stat{ background: var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:10px 16px; text-align:center; }
+.m-stat b{ display:block; font-family:var(--font-display); font-size:1.3rem; color: var(--gold); }
+.m-stat span{ font-family:var(--font-mono); font-size:.6rem; color:var(--text-faint); text-transform:uppercase; }
+.m-tech{ display:flex; flex-wrap:wrap; gap:8px; }
+.m-tech span{ font-family:var(--font-mono); font-size:.68rem; border:1px solid var(--line-strong); padding:5px 11px; border-radius:6px; color: var(--text-dim);}
+
+/* ============================= SKILLS BUBBLES ============================= */
+.skill-tabs{ display:flex; gap:10px; margin-bottom:34px; flex-wrap:wrap;}
+.skill-tab{
+  font-family: var(--font-mono); font-size:.72rem; padding: 9px 18px; border-radius:999px;
+  border: 1px solid var(--line-strong); color: var(--text-dim); cursor:none; transition: all .2s ease;
+}
+.skill-tab.active{ background: var(--teal); color:#04150F; border-color:transparent; font-weight:700;}
+.bubble-field{ display:flex; flex-wrap:wrap; gap: 16px; min-height: 220px; align-content:flex-start; }
+.bubble{
+  position: relative; border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--panel); padding: 16px 26px; font-weight:600; font-size: .95rem;
+  cursor: none; transition: transform .25s ease, border-color .25s ease, background .25s ease;
+  display:flex; align-items:center; gap:10px;
+}
+.bubble .lvl{ width:6px; height:6px; border-radius:50%; background: var(--teal); }
+.bubble:hover{ transform: translateY(-4px) scale(1.06); border-color: var(--teal); background: var(--teal-soft); }
+.bubble-pop{
+  position:absolute; bottom: calc(100% + 12px); left:50%; transform: translateX(-50%) translateY(8px);
+  width: 230px; background: var(--panel-2); border:1px solid var(--line-strong); border-radius:12px; padding:14px 16px;
+  opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; z-index: 50; text-align:left;
+  box-shadow: var(--shadow);
+}
+.bubble:hover .bubble-pop, .bubble.tapped .bubble-pop{ opacity:1; transform: translateX(-50%) translateY(0); pointer-events:auto;}
+.bubble-pop .bp-title{ font-family:var(--font-mono); font-size:.65rem; color: var(--teal); text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px;}
+.bubble-pop .bp-desc{ font-size:.78rem; color: var(--text-dim); line-height:1.5; margin-bottom:8px;}
+.confidence-bar{ height:4px; border-radius:4px; background: var(--line); overflow:hidden;}
+.confidence-fill{ height:100%; background: linear-gradient(90deg,var(--teal),var(--gold)); }
+
+/* ============================= ACHIEVEMENT COUNTERS ============================= */
+.counter-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 20px; text-align:center; }
+.counter-box{ background: var(--panel); border:1px solid var(--line-strong); border-radius: var(--radius); padding: 34px 18px; }
+.counter-num{ font-family: var(--font-display); font-size: clamp(2.4rem,4vw,3.4rem); font-weight:700; color: var(--gold); line-height:1; }
+.counter-lbl{ font-family: var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color: var(--text-dim); margin-top:10px;}
+.ach-strip{ margin-top: 30px; display:flex; flex-direction:column; gap:12px; }
+.ach-row{ display:flex; gap:16px; align-items:flex-start; background: var(--panel-2); border:1px solid var(--line); border-radius:12px; padding:16px 20px; }
+.ach-row .aicon{ font-size:1.3rem; }
+.ach-row b{ display:block; font-size:.92rem; margin-bottom:2px; }
+.ach-row span{ font-size:.8rem; color: var(--text-dim); }
+
+/* ============================= TECH ORBIT ============================= */
+.orbit-wrap{ position: relative; width: min(560px,90vw); height: min(560px,90vw); margin: 0 auto; }
+.orbit-center{
+  position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+  width: 108px; height:108px; border-radius:50%; z-index:5;
+  background: var(--panel); border:1px solid var(--line-strong);
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  box-shadow: 0 0 40px var(--teal-soft);
+}
+.orbit-center b{ font-family:var(--font-display); font-size:1.4rem; color: var(--gold); }
+.orbit-center span{ font-family:var(--font-mono); font-size:.55rem; color: var(--text-faint); text-transform:uppercase; }
+.ring{ position:absolute; top:50%; left:50%; border:1px dashed var(--line-strong); border-radius:50%; transform: translate(-50%,-50%); }
+.ring1{ width: 70%; height:70%; animation: spin 34s linear infinite; }
+.ring2{ width: 100%; height:100%; animation: spin 50s linear infinite reverse; }
+@keyframes spin{ to{ transform: translate(-50%,-50%) rotate(360deg); } }
+.orbit-wrap{ overflow: visible; }
+.planet-orbit{
+  position:absolute; top:50%; left:50%; width:0; height:0;
+  transform: rotate(var(--start-angle,0deg));
+  animation-name: spinFromStart; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+@keyframes spinFromStart{ from{ transform: rotate(var(--start-angle,0deg)); } to{ transform: rotate(calc(var(--start-angle,0deg) + 360deg)); } }
+.planet{
+  position:absolute; top:50%; left:100%; transform: translate(-50%,-50%);
+  width: 84px; height: 84px; margin-left:0;
+}
+.planet-inner{
+  width:100%; height:100%; border-radius:50%; background: var(--panel); border:1px solid var(--line-strong);
+  display:flex; align-items:center; justify-content:center; text-align:center; padding:6px;
+  font-family:var(--font-mono); font-size:.62rem; font-weight:600; color: var(--text-dim);
+  transition: all .25s ease; cursor:none;
+}
+.planet-inner:hover{ background: var(--teal); color:#04150F; box-shadow: 0 0 28px var(--teal); transform:scale(1.14); border-color:transparent;}
+.orbit-tip{
+  position:absolute; bottom: 110%; left:50%; transform:translateX(-50%);
+  width:160px; background: var(--panel-2); border:1px solid var(--line-strong); border-radius:10px; padding:10px 12px;
+  font-family: var(--font-body); font-size:.72rem; color: var(--text-dim); opacity:0; pointer-events:none; transition:opacity .2s ease;
+  z-index:20;
+}
+.planet:hover .orbit-tip, .planet.tapped .orbit-tip{ opacity:1; }
+
+/* ============================= EVENT SHOWCASE ============================= */
+.gallery{
+  display:flex; gap: 22px; overflow-x:auto; padding: 10px 4px 26px; scroll-snap-type: x mandatory;
+  cursor: grab; user-select:none;
+}
+.gallery.dragging{ cursor: grabbing; }
+.gallery::-webkit-scrollbar{ height:6px; }
+.gallery::-webkit-scrollbar-thumb{ background: var(--line-strong); border-radius:6px; }
+.gcard{
+  flex: 0 0 320px; scroll-snap-align:start; border-radius: var(--radius); overflow:hidden;
+  border:1px solid var(--line-strong); background: var(--panel); position:relative; height: 380px;
+}
+.gcard .gvisual{
+  height: 220px; display:flex; align-items:center; justify-content:center; font-size:3.6rem;
+  background: linear-gradient(150deg, var(--panel-2), var(--bg-elev)); position:relative; overflow:hidden;
+}
+.gcard .gvisual .gv-anim{ position:absolute; inset:0; opacity:.5; }
+.gcard .gbody{ padding: 20px 22px; }
+.gcard h4{ font-family:var(--font-display); font-size:1.15rem; margin-bottom:6px; }
+.gcard p{ font-size:.82rem; color: var(--text-dim); line-height:1.55; }
+.gcard .gnum{ position:absolute; top:14px; left:16px; font-family:var(--font-mono); font-size:.62rem; color: var(--gold); background: rgba(0,0,0,.35); padding:3px 8px; border-radius:6px; }
+
+/* ============================= BUILD CARDS ============================= */
+.build-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:20px; }
+.build-card{
+  background: var(--panel); border:1px solid var(--line-strong); border-radius: var(--radius);
+  padding: 26px; cursor: none; transition: transform .25s ease, border-color .25s ease;
+}
+.build-card:hover{ transform: translateY(-5px); border-color: var(--gold); }
+.build-card .bicon{ font-size:1.8rem; margin-bottom:14px; }
+.build-card h4{ font-family: var(--font-display); font-size:1.1rem; margin-bottom:8px;}
+.build-card p{ font-size:.8rem; color: var(--text-dim); line-height:1.55; }
+
+/* ============================= MAP ============================= */
+.map-wrap{ display:flex; gap: 40px; align-items:center; flex-wrap:wrap; justify-content:center; }
+.map-svg-holder{ flex: 0 0 340px; }
+.map-info{ flex:1; min-width:260px; }
+.map-pin{ cursor:none; }
+.map-pin circle.pulse{ animation: pinpulse 2s infinite; transform-origin:center; }
+@keyframes pinpulse{ 0%{ opacity:.55; transform:scale(1);} 100%{ opacity:0; transform:scale(2.6);} }
+.pin-card{
+  background: var(--panel); border:1px solid var(--line-strong); border-radius: var(--radius); padding: 24px;
+  display:none;
+}
+.pin-card.active{ display:block; }
+.pin-card h4{ font-family:var(--font-display); font-size:1.3rem; margin-bottom:10px; }
+.pin-card ul{ display:flex; flex-direction:column; gap:8px; margin-top:10px;}
+.pin-card li{ font-size:.85rem; color: var(--text-dim); padding-left:16px; position:relative; }
+.pin-card li::before{ content:'◆'; position:absolute; left:0; color: var(--teal); font-size:.6rem; top:4px;}
+
+/* ============================= TERMINAL ============================= */
+#terminal-toggle{
+  position: fixed; right: 24px; bottom: 96px; z-index:400;
+  font-family: var(--font-mono); font-size:.72rem; padding: 12px 18px; border-radius: 10px;
+  background: var(--panel); border:1px solid var(--line-strong); display:flex; align-items:center; gap:8px;
+  box-shadow: var(--shadow); cursor:none;
+}
+#terminal-toggle:hover{ border-color: var(--teal); color: var(--teal); }
+#terminal{
+  position: fixed; right: 24px; bottom: 150px; z-index: 401; width: 380px; max-width: 88vw; height: 320px;
+  background: #05070C; border: 1px solid var(--line-strong); border-radius: 12px; overflow:hidden;
+  display:flex; flex-direction:column; box-shadow: var(--shadow);
+  transform: translateY(16px) scale(.97); opacity:0; pointer-events:none; transition: all .25s ease;
+}
+#terminal.open{ transform:none; opacity:1; pointer-events:auto; }
+.term-bar{ background:#11151f; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+.term-bar span{ width:11px; height:11px; border-radius:50%; }
+.term-bar .r{background:#FF5F56;} .term-bar .y{background:#FFBD2E;} .term-bar .g{background:#27C93F;}
+.term-bar .term-title{ font-family:var(--font-mono); font-size:.65rem; color:#8892a6; margin-left:8px;}
+#term-output{ flex:1; overflow-y:auto; padding: 14px; font-family: var(--font-mono); font-size:.76rem; color:#B7F5C8; line-height:1.6; }
+#term-output .line{ margin-bottom: 6px; white-space:pre-wrap; }
+#term-output .prompt-echo{ color:#67e0ff; }
+#term-output .muted{ color:#7d8aa3; }
+.term-input-row{ display:flex; align-items:center; padding: 10px 14px; border-top:1px solid #1c2233; font-family:var(--font-mono); font-size:.78rem;}
+.term-input-row .p{ color:#D2A24C; margin-right:8px; }
+#term-input{ flex:1; background:transparent; border:none; outline:none; color:#E8ECF4; font-family:var(--font-mono); font-size:.78rem; }
+.term-hist-btn{
+  width:26px; height:26px; margin-left:4px; border-radius:6px;
+  background:#151b28; border:1px solid #232b3d; color:#8892a6; font-size:.62rem;
+  display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+}
+.term-hist-btn:active{ background:#1c2436; color:var(--teal); }
+.term-quick{
+  display:flex; gap:6px; padding: 8px 10px 0; flex-wrap:wrap;
+  border-top:1px solid #1c2233;
+}
+.term-quick button{
+  font-family: var(--font-mono); font-size:.65rem; color:#9fb0c9;
+  background:#11151f; border:1px solid #232b3d; border-radius:20px;
+  padding:5px 11px; white-space:nowrap; flex:0 0 auto;
+}
+.term-quick button:active{ background: var(--teal-soft); border-color: var(--teal); color: var(--teal); }
+
+/* ---- ChintuGPT chat message styling (reuses terminal theme) ---- */
+.chat-msg{ display:flex; gap:6px; align-items:flex-start; }
+.chat-tag{ font-weight:700; flex:0 0 auto; }
+.user-msg .chat-tag{ color:#67e0ff; }
+.assistant-msg .chat-tag{ color: var(--gold); }
+.chat-body{ white-space:pre-wrap; word-break:break-word; flex:1 1 auto; }
+.chat-msg.thinking .chat-body{ color:#7d8aa3; font-style:italic; }
+#term-input:disabled{ opacity:.5; cursor:not-allowed; }
+
+/* ============================= CONTACT ============================= */
+.card3d{
+  max-width: 460px; margin: 0 auto; background: linear-gradient(155deg, var(--panel), var(--panel-2));
+  border:1px solid var(--line-strong); border-radius: 20px; padding: 40px; text-align:center; box-shadow: var(--shadow);
+  position:relative; overflow:hidden;
+}
+.card3d::before{ content:''; position:absolute; top:-40%; right:-30%; width:60%; height:80%; background: radial-gradient(circle, var(--teal-soft), transparent 70%); }
+.card3d h3{ font-family: var(--font-display); font-size:1.8rem; margin-bottom:6px; position:relative; }
+.card3d .role{ font-family: var(--font-mono); font-size:.7rem; color: var(--teal); letter-spacing:.1em; text-transform:uppercase; margin-bottom:26px; position:relative;}
+.contact-btns{ display:flex; flex-direction:column; gap:10px; position:relative; }
+.cbtn{
+  display:flex; align-items:center; justify-content:space-between; padding: 13px 18px; border-radius:10px;
+  border:1px solid var(--line-strong); background: var(--bg-elev); font-size:.85rem; cursor:none; transition: all .2s ease;
+}
+.cbtn:hover{ border-color: var(--teal); background: var(--teal-soft); transform: translateX(4px); }
+.cbtn .cico{ font-size:1rem; margin-right:10px; }
+.cbtn .copied-tag{ font-family:var(--font-mono); font-size:.62rem; color: var(--gold); opacity:0; transition:opacity .2s ease;}
+.cbtn.copied .copied-tag{ opacity:1; }
+
+/* ============================= FOOTER SKY ============================= */
+footer{ position: relative; padding: 90px 24px 40px; overflow:hidden; background: #05070C; }
+#sky-canvas{ position:absolute; inset:0; }
+.footer-inner{ position:relative; z-index:2; text-align:center; color:#B7C0D6; }
+.footer-inner .fname{ font-family: var(--font-display); font-size:1.6rem; color:#fff; margin-bottom:8px; }
+.footer-inner .flinks{ display:flex; gap:20px; justify-content:center; margin: 18px 0; flex-wrap:wrap; }
+.footer-inner .flinks a{ font-family: var(--font-mono); font-size:.72rem; color:#9AA6C0; border-bottom:1px solid transparent; }
+.footer-inner .flinks a:hover{ color: var(--teal); border-color: var(--teal); }
+.footer-inner .fcopy{ font-family: var(--font-mono); font-size:.62rem; color:#4d5670; margin-top: 30px; letter-spacing:.05em;}
+.hidden-qr{ position:absolute; width:14px; height:14px; opacity:.12; cursor:none; z-index:3; transition: opacity .2s ease; }
+.hidden-qr:hover{ opacity: .9; }
+
+/* ============================= TOASTS ============================= */
+#toast-host{ position: fixed; top: 22px; right: 22px; z-index: 9998; display:flex; flex-direction:column; gap:10px; }
+.toast{
+  background: var(--panel); border:1px solid var(--teal); border-radius: 10px; padding: 14px 18px;
+  font-family: var(--font-mono); font-size:.76rem; box-shadow: var(--shadow); max-width: 280px;
+  transform: translateX(120%); transition: transform .4s cubic-bezier(.2,.9,.2,1);
+}
+.toast.show{ transform: translateX(0); }
+
+/* ============================= REVEAL ANIM ============================= */
+.reveal{ opacity:0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity:1; transform:none; }
+
+/* ============================= MISC ============================= */
+::-webkit-scrollbar{ width:9px; }
+::-webkit-scrollbar-track{ background: var(--bg); }
+::-webkit-scrollbar-thumb{ background: var(--line-strong); border-radius:8px; }
+.divider-fade{ height:1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); margin: 0 auto; max-width:1180px; }
+
+/* dock logo / mobile-visible easter egg target — base rule must come
+   BEFORE the mobile media query below, otherwise it wins the cascade
+   and hides the badge on mobile even though the media query sets it
+   back to display:flex. */
+.dock-logo{
+  width:36px; height:36px; border-radius:10px;
+  display:none; align-items:center; justify-content:center;
+  font-family: var(--font-mono); font-weight:700; font-size:.7rem;
+  color: var(--gold); border:1px solid var(--line-strong);
+  margin-right:4px; user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.dock-logo:active{ background: var(--gold-soft); }
+
+@media (max-width:640px){
+  section{ padding: 60px 0; }
+  .wrap{ padding:0 20px; }
+  body{ padding-bottom: 66px; }
+
+  #dock{
+    left:0; right:0; bottom:0; transform:none;
+    width:100%; border-radius:0;
+    justify-content:space-between; gap:2px;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    border-left:none; border-right:none; border-bottom:none;
+    background: rgba(10,14,24,0.94);
+  }
+  body.light #dock{ background: rgba(255,255,255,0.92); }
+  .dock-item{
+    flex:1; width:auto; height:50px;
+    flex-direction:column-reverse; gap:2px; font-size:1rem;
+  }
+  .dock-item .tip{
+    position:static; opacity:1; transform:none; pointer-events:none;
+    background:none; border:none; padding:0;
+    font-size:.5rem; letter-spacing:.02em; color: var(--text-faint);
+  }
+  #dock-toggle{ flex:0 0 34px; width:34px; height:50px; margin-left:0; }
+  .dock-logo{ display:flex; }
+
+  #terminal-toggle{ bottom: 78px; right:14px; padding:10px 14px; font-size:.68rem; }
+  #terminal{ bottom: 130px; right:14px; left:14px; width:auto; max-width:none; height: 64vh; }
+  .term-quick{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+  .planet{ width:64px; height:64px; }
+  .planet-inner{ font-size:.56rem; padding:4px; }
+  .orbit-tip{ width:120px; font-size:.66rem; }
+  #toast-host{ left:14px; right:14px; top: max(16px, env(safe-area-inset-top)); align-items:flex-end; }
+  .toast{ max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="loader-mark">AK</div>
+  <div class="loader-bar-track"><div class="loader-bar"></div></div>
+  <div class="loader-text">Loading Experience…</div>
+</div>
+
+<!-- ============ CURSOR ============ -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ============ TOASTS ============ -->
+<div id="toast-host"></div>
+
+<!-- ============ DOCK NAV ============ -->
+<nav id="dock">
+  <div class="dock-logo" id="dock-logo" title="AK">AK</div>
+  <a class="dock-item" href="#hero"><span class="tip">Home</span>🏠</a>
+  <a class="dock-item" href="#about"><span class="tip">About</span>🪪</a>
+  <a class="dock-item" href="#lab"><span class="tip">Projects</span>🗂️</a>
+  <a class="dock-item" href="#skills"><span class="tip">Skills</span>🧠</a>
+  <a class="dock-item" href="#orbit"><span class="tip">Stack</span>🪐</a>
+  <a class="dock-item" href="#contact"><span class="tip">Contact</span>✉️</a>
+  <button id="dock-toggle" title="Toggle theme">🌙</button>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div id="hero-grid"></div>
+  <div id="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="dot"></span> Ghazipur → Delhi University</div>
+    <h1 class="hero-title">Hi, I'm <em>Mohammad Adnan Khan</em></h1>
+    <div class="hero-role"><span id="typed-role"></span><span class="caret"></span></div>
+    <div class="hero-ctas">
+      <a href="#lab" class="btn btn-primary magnetic">🚀 Explore My Work</a>
+      <a href="#lab" class="btn btn-ghost magnetic">💻 View Projects</a>
+      <a href="Mohammad_Adnan_Khan_CV.html" target="_blank" class="btn btn-ghost magnetic">📄 Download CV</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Who's Behind This</div>
+      <h2 class="section-title">About Adnan</h2>
+      <p class="section-sub">Flip the card. There's more on the back than the front lets on.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="flip-scene reveal" id="flip-scene">
+        <div class="flip-card">
+          <div class="flip-face flip-front">
+            <div class="avatar-ring"><div class="avatar-inner">AK</div></div>
+            <h3>Adnan Khan</h3>
+            <p>Operations · Systems · Web</p>
+            <span class="flip-hint">↻ click to flip</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="fb-row"><b>Studying</b><span>B.Com (Hons.)</span></div>
+            <div class="fb-row"><b>University</b><span>Delhi University</span></div>
+            <div class="fb-row"><b>College</b><span>Zakir Husain Delhi College</span></div>
+            <div class="fb-row"><b>Based in</b><span>Ghazipur, UP</span></div>
+            <div class="fb-row"><b>Role</b><span>Operations Head</span></div>
+            <div class="fb-fact">"Runs systems that handle 800 people a day, then goes back to accountancy homework."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-copy reveal">
+        <p class="lede">I build the systems behind the scenes — the ones that make events run, queues disappear, and 300+ people move through a room without chaos.</p>
+        <p>I'm a B.Com (Hons.) student at Delhi University, but most of my real education has happened in the field — as Operations Head of my college's technical society, coordinating live events, and as a self-taught developer building the QR systems and websites that power them.</p>
+        <p>My work sits at the intersection of business operations and digital execution: financial accounting and Tally ERP on one side, HTML/CSS/JavaScript and deployed web systems on the other. I like being the person who can plan the workflow <em>and</em> build the tool that runs it.</p>
+        <div class="about-tags">
+          <span>Operations Head</span><span>Event Systems</span><span>QR Automation</span><span>Financial Accounting</span><span>Frontend Dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ PROJECT LAB ============ -->
+<section id="lab">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Project Laboratory</div>
+      <h2 class="section-title">Open a Folder</h2>
+      <p class="section-sub">Each project is a folder, not a card. Click to open it.</p>
+    </div>
+
+    <div class="lab-grid" id="lab-grid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" id="modal-box">
+    <span class="modal-close" id="modal-close">✕</span>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ SKILLS BUBBLES ============ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Toolkit</div>
+      <h2 class="section-title">Skills, Not Bars</h2>
+      <p class="section-sub">Hover a bubble to see where it's actually been used.</p>
+    </div>
+
+    <div class="skill-tabs" id="skill-tabs">
+      <div class="skill-tab active" data-group="ops">Operations</div>
+      <div class="skill-tab" data-group="fin">Finance &amp; Data</div>
+      <div class="skill-tab" data-group="dig">Digital Tools</div>
+    </div>
+    <div class="bubble-field" id="bubble-field"></div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">By The Numbers</div>
+      <h2 class="section-title">Achievements</h2>
+      <p class="section-sub">Counted up, not exaggerated — every figure below is from real events.</p>
+    </div>
+
+    <div class="counter-grid reveal">
+      <div class="counter-box"><div class="counter-num" data-target="300" data-suffix="+">0</div><div class="counter-lbl">Registrations Managed</div></div>
+      <div class="counter-box"><div class="counter-num" data-target="800" data-suffix="">0</div><div class="counter-lbl">Daily Users (Peak)</div></div>
+      <div class="counter-box"><div class="counter-num" data-target="5" data-suffix="+">0</div><div class="counter-lbl">Events Executed</div></div>
+      <div class="counter-box"><div class="counter-num" data-target="3" data-suffix="+">0</div><div class="counter-lbl">Years in Operations</div></div>
+    </div>
+
+    <div class="ach-strip reveal">
+      <div class="ach-row"><span class="aicon">🏆</span><div><b>1st Position — School Science Exhibition</b><span>Arduino-based project, recognized at school level.</span></div></div>
+      <div class="ach-row"><span class="aicon">🧭</span><div><b>Appointed Operations Head</b><span>Based on consistent execution performance in the technical society.</span></div></div>
+      <div class="ach-row"><span class="aicon">📈</span><div><b>Zero Major Operational Failures</b><span>Across Nature Nexus's full run — 300+ participants, 800 peak daily users.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ MAP ============ -->
+<section id="map">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Where I Work From</div>
+      <h2 class="section-title">Ghazipur → Delhi</h2>
+      <p class="section-sub">Click a pin to see what happens there.</p>
+    </div>
+
+    <div class="map-wrap reveal">
+      <div class="map-svg-holder">
+        <svg viewBox="0 0 320 360" width="100%" id="map-svg">
+          <path d="M120 20 L180 15 L220 45 L245 90 L235 140 L260 175 L250 220 L210 260 L215 300 L175 335 L130 320 L95 340 L60 300 L40 250 L55 200 L35 150 L55 100 L45 60 Z"
+            fill="none" stroke="var(--line-strong)" stroke-width="1.4" />
+          <g class="map-pin" data-pin="ghazipur" transform="translate(150,120)">
+            <circle class="pulse" r="9" fill="var(--gold)"></circle>
+            <circle r="6" fill="var(--gold)"></circle>
+            <text x="14" y="4" font-family="JetBrains Mono" font-size="10" fill="var(--text-dim)">Ghazipur</text>
+          </g>
+          <g class="map-pin" data-pin="delhi" transform="translate(100,215)">
+            <circle class="pulse" r="9" fill="var(--teal)"></circle>
+            <circle r="6" fill="var(--teal)"></circle>
+            <text x="14" y="4" font-family="JetBrains Mono" font-size="10" fill="var(--text-dim)">Delhi</text>
+          </g>
+        </svg>
+      </div>
+      <div class="map-info">
+        <div class="pin-card active" id="pin-ghazipur">
+          <h4>📍 Ghazipur, Uttar Pradesh</h4>
+          <p style="color:var(--text-dim);font-size:.85rem;">Home base. Where it started.</p>
+          <ul><li>Class XII, Commerce (CBSE) — distinction in Accountancy</li><li>1st position, school Science Exhibition (Arduino project)</li></ul>
+        </div>
+        <div class="pin-card" id="pin-delhi">
+          <h4>📍 Delhi</h4>
+          <p style="color:var(--text-dim);font-size:.85rem;">Where the systems get built.</p>
+          <ul>
+            <li>B.Com (Hons.), Zakir Husain Delhi College, Delhi University</li>
+            <li>Operations Head — college technical society</li>
+            <li>Nature Nexus, Treasure Hunt & LAN leaderboard, built and run on campus</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ TECH ORBIT ============ -->
+<section id="orbit">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">My Tech Stack</div>
+      <h2 class="section-title">In Orbit</h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto;">Hover a planet.</p>
+    </div>
+
+    <div class="orbit-wrap reveal" id="orbit-wrap">
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div class="orbit-center"><b>AK</b><span>Stack</span></div>
+      <!-- planets injected by JS -->
+    </div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ EVENT SHOWCASE ============ -->
+<section id="events">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Live In Action</div>
+      <h2 class="section-title">Event Showcase</h2>
+      <p class="section-sub">Drag to scroll.</p>
+    </div>
+    <div class="gallery reveal" id="gallery">
+      <div class="gcard">
+        <span class="gnum">01</span>
+        <div class="gvisual">🌿</div>
+        <div class="gbody"><h4>Nature Nexus</h4><p>Full event platform: registration, QR entry, 300+ participants, 800 daily users at peak.</p></div>
+      </div>
+      <div class="gcard">
+        <span class="gnum">02</span>
+        <div class="gvisual">🗺️</div>
+        <div class="gbody"><h4>Treasure Hunt</h4><p>Multi-stage QR automation replacing manual participant tracking entirely.</p></div>
+      </div>
+      <div class="gcard">
+        <span class="gnum">03</span>
+        <div class="gvisual">🏥</div>
+        <div class="gbody"><h4>Health Camp</h4><p>Logistics and scheduling coordination across doctors, organizers, and attendees.</p></div>
+      </div>
+      <div class="gcard">
+        <span class="gnum">04</span>
+        <div class="gvisual">🏆</div>
+        <div class="gbody"><h4>LAN Leaderboard</h4><p>Real-time leaderboard, controlled updates, fair live competition tracking.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ WHAT CAN I BUILD ============ -->
+<section id="build">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="section-title">What Can I Build?</h2>
+      <p class="section-sub">Click a card for specifics.</p>
+    </div>
+    <div class="build-grid" id="build-grid"></div>
+  </div>
+</section>
+
+<div class="divider-fade wrap"></div>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Let's Talk</div>
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto;">A digital business card. Tap what you need.</p>
+    </div>
+
+    <div class="card3d reveal">
+      <h3>Mohammad Adnan Khan</h3>
+      <div class="role">Operations · Business Systems · Digital</div>
+      <div class="contact-btns">
+        <a class="cbtn" href="https://wa.me/918115784828" target="_blank"><span><span class="cico">💬</span>WhatsApp</span><span>+91 81157 84828</span></a>
+        <a class="cbtn" href="mailto:mohammadadnankhan.rak@gmail.com"><span><span class="cico">✉️</span>Email</span><span>Send a message</span></a>
+        <a class="cbtn" href="https://adnan-nn26nexus.netlify.app" target="_blank"><span><span class="cico">🌐</span>Portfolio</span><span>adnan-nn26nexus.netlify.app</span></a>
+        <a class="cbtn" href="Mohammad_Adnan_Khan_CV.html" target="_blank"><span><span class="cico">📄</span>Resume</span><span>View / Print CV</span></a>
+        <button class="cbtn" id="copy-email"><span><span class="cico">📋</span>Copy Email</span><span class="copied-tag">Copied!</span></button>
+        <button class="cbtn" id="copy-phone"><span><span class="cico">📋</span>Copy Phone</span><span class="copied-tag">Copied!</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHINTUGPT — AI CV ASSISTANT ============ -->
+<button id="terminal-toggle">&gt; 🤖 ChintuGPT</button>
+<div id="terminal">
+  <div class="term-bar"><span class="r"></span><span class="y"></span><span class="g"></span><span class="term-title">🤖 ChintuGPT — AI CV Assistant</span></div>
+  <div id="term-output"></div>
+  <div class="term-quick" id="term-quick">
+    <button data-c="Tell me about yourself">Tell me about yourself</button>
+    <button data-c="Projects">Projects</button>
+    <button data-c="Skills">Skills</button>
+    <button data-c="Education">Education</button>
+    <button data-c="Experience">Experience</button>
+    <button data-c="Achievements">Achievements</button>
+    <button data-c="Contact">Contact</button>
+    <button data-c="resume">Resume</button>
+    <button data-c="help">help</button>
+    <button data-c="clear">clear</button>
+  </div>
+  <div class="term-input-row">
+    <span class="p">&gt;</span>
+    <input id="term-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ask ChintuGPT anything…">
+    <button id="term-hist-up" class="term-hist-btn" title="previous message">▲</button>
+    <button id="term-hist-down" class="term-hist-btn" title="next message">▼</button>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer id="site-footer">
+  <canvas id="sky-canvas"></canvas>
+  <div class="footer-inner">
+    <div class="fname">Mohammad Adnan Khan</div>
+    <p style="font-family:'JetBrains Mono';font-size:.7rem;color:#7d8aa3;">Operations · Business Systems · Digital Execution</p>
+    <div class="flinks">
+      <a href="mailto:mohammadadnankhan.rak@gmail.com">Email</a>
+      <a href="https://wa.me/918115784828" target="_blank">WhatsApp</a>
+      <a href="https://adnan-nn26nexus.netlify.app" target="_blank">Portfolio</a>
+      <a href="#hero">Back to top ↑</a>
+    </div>
+    <div class="fcopy">© Mohammad Adnan Khan · Built as an interactive experience, not a static page.</div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   GLOBAL DATA
+   ============================================================ */
+const PROJECTS = [
+  {
+    icon:'🌿', title:'Nature Nexus', period:'Full-Stack Event Platform',
+    link:'https://adnan-nn26nexus.netlify.app/',
+    desc:'Full-stack event management system: registration platform + QR-based entry, built for scale.',
+    bullets:[
+      'Built registration platform and QR-based entry system using HTML, CSS and JavaScript',
+      'Deployed on Netlify for zero-downtime public access',
+      'Managed 300+ participants; handled 600–800 daily users during peak event activity',
+      'Reduced manual work via structured digital workflows — zero major operational failures'
+    ],
+    stats:[['300+','Participants'],['800','Peak Daily Users'],['0','Major Failures']],
+    tech:['HTML','CSS','JavaScript','Netlify','QR Systems']
+  },
+  {
+    icon:'🗺️', title:'Treasure Hunt', period:'Live Multi-Stage Event',
+    link:'https://adnan-hunt.netlify.app/',
+    desc:'QR-based automation system for a live multi-stage treasure hunt event.',
+    bullets:[
+      'Designed a multi-stage QR system for automated participant progression',
+      'Eliminated manual tracking of teams across stages entirely',
+      'Integrated digital validation directly into the event flow',
+      'Reduced dependency on manual coordination between stage volunteers'
+    ],
+    stats:[['Multi','Stage Flow'],['0','Manual Tracking'],['1','Core System']],
+    tech:['QR Systems','Automation','Event Logic']
+  },
+  {
+    icon:'🏆', title:'LAN Leaderboard', period:'Real-Time Competition',
+    link:'https://adnan-nn26nexus.netlify.app/lan.html',
+    desc:'Real-time leaderboard system for a live LAN gaming event.',
+    bullets:[
+      'Implemented a real-time leaderboard with controlled update logic',
+      'Ensured fair, transparent, tamper-resistant competition tracking',
+      'Ran live throughout the event without disruption'
+    ],
+    stats:[['Live','Updates'],['Fair','Scoring Logic']],
+    tech:['Real-time Systems','JavaScript']
+  },
+  {
+    icon:'🎨', title:'Freelance Design Work', period:'Ongoing',
+    desc:'Presentation design and visual content for a YouTube-based educator.',
+    bullets:[
+      'Designed PowerPoint presentations structured for clarity and student engagement',
+      'Created YouTube thumbnails and visual assets applying layout, typography and brand consistency',
+      'Delivered on an ongoing basis as a trusted freelance partner'
+    ],
+    stats:[['Ongoing','Engagement'],['2','Deliverable Types']],
+    tech:['Canva','Visual Design','PowerPoint']
+  }
+];
+
+const SKILLS = {
+  ops:[
+    {name:'Event Execution & Planning', lvl:95, desc:'Led planning + execution for 5+ college events end-to-end.'},
+    {name:'Workflow Design', lvl:90, desc:'Designed task-allocation systems to cut operational friction.'},
+    {name:'Team Coordination', lvl:88, desc:'Coordinated multi-function teams during live operations.'},
+    {name:'Process Optimization', lvl:85, desc:'Reduced manual work across Nature Nexus\'s registration flow.'},
+    {name:'Business Ops Support', lvl:80, desc:'Handled Meesho e-commerce listings & order workflows.'}
+  ],
+  fin:[
+    {name:'Financial Accounting', lvl:88, desc:'Core strength from B.Com (Hons.) coursework, distinction in Accountancy.'},
+    {name:'Tally ERP', lvl:78, desc:'Applied accounting software for business record-keeping.'},
+    {name:'MS Excel', lvl:85, desc:'Data organization and analysis across operations & finance tasks.'}
+  ],
+  dig:[
+    {name:'HTML / CSS / JS', lvl:82, desc:'Built and deployed Nature Nexus\'s full registration + QR platform.'},
+    {name:'QR Code Systems', lvl:90, desc:'Designed automated QR flows for two separate live events.'},
+    {name:'Netlify Deployment', lvl:80, desc:'Shipped production sites handling 800 daily users.'},
+    {name:'Canva & Visual Design', lvl:85, desc:'Ongoing freelance thumbnail & presentation design work.'},
+    {name:'Video Editing', lvl:70, desc:'Supporting visual content for freelance & event work.'}
+  ]
+};
+
+const ORBIT = [
+  {name:'HTML', desc:'Structure for every platform I\'ve shipped, including Nature Nexus.'},
+  {name:'CSS', desc:'Styling and layout across all deployed event systems.'},
+  {name:'JavaScript', desc:'Logic behind QR flows and the live LAN leaderboard.'},
+  {name:'Netlify', desc:'Deployment for Nature Nexus — 800 daily users at peak.'},
+  {name:'Canva', desc:'Visual design for freelance presentation & thumbnail work.'},
+  {name:'MS Excel', desc:'Data handling across operations and finance tasks.'},
+  {name:'Tally ERP', desc:'Applied accounting software from coursework into practice.'},
+  {name:'QR Systems', desc:'Core automation layer for two live college events.'}
+];
+
+const BUILDS = [
+  {icon:'🌐', title:'Website Development', desc:'From concept to deployed site — HTML/CSS/JS, shipped on Netlify.', detail:'I design and build front-end websites end-to-end: layout, styling, interaction, and deployment. Nature Nexus is the proof — a live registration site that held up under 800 daily users.'},
+  {icon:'🎟️', title:'Event Management Systems', desc:'Registration, entry flow and on-the-ground execution.', detail:'I\'ve run the full lifecycle of college events — planning, logistics, vendor/volunteer coordination, and the live-day execution — for 5+ events with zero major failures.'},
+  {icon:'📱', title:'QR-Based Systems', desc:'Automated entry, tracking and progression flows.', detail:'Designed multi-stage QR automation for a live treasure hunt and QR-based entry for Nature Nexus — replacing manual tracking with reliable digital validation.'},
+  {icon:'📊', title:'Presentation & Visual Design', desc:'Decks, thumbnails and brand-consistent visual assets.', detail:'Ongoing freelance work designing PowerPoint presentations and YouTube thumbnails — structured for clarity, engagement and consistent visual identity.'},
+  {icon:'🧾', title:'Business & Financial Ops', desc:'Accounting, Tally ERP and e-commerce order workflows.', detail:'Backed by a B.Com (Hons.) foundation with a distinction in Accountancy — applied through Tally ERP, Excel, and hands-on e-commerce operations work.'},
+  {icon:'⚙️', title:'Workflow Automation', desc:'Turning manual, error-prone processes into structured systems.', detail:'Whether it\'s a leaderboard, a registration queue or a stage-progression system — I look for the manual bottleneck and design a workflow that removes it.'}
+];
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+(function(){
+  const loader = document.getElementById('loader');
+  let done = false;
+  function hideLoader(){
+    if(done) return; done = true;
+    loader.classList.add('done');
+  }
+  // Primary: hide shortly after this script runs (DOM is already parsed
+  // since this script sits at the end of <body>). Do NOT wait on window "load" —
+  // that event depends on every external resource (e.g. Google Fonts) finishing,
+  // and if any of those stall or get blocked, "load" never fires and the loader
+  // hangs forever.
+  setTimeout(hideLoader, 2000);
+  // Safety net in case something above is somehow delayed.
+  window.addEventListener('load', ()=> setTimeout(hideLoader, 300));
+  setTimeout(hideLoader, 5000);
+})();
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+(function(){
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if(matchMedia('(hover:none)').matches) return;
+  let rx=0, ry=0, mx=0, my=0;
+  window.addEventListener('mousemove', e=>{
+    dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px';
+    mx = e.clientX; my = e.clientY;
+  });
+  function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
+  loop();
+  document.querySelectorAll('a,button,.bubble,.folder,.t-head,.build-card,.gcard,.dock-item,.dock-logo,.flip-scene,.planet-inner,.map-pin').forEach(el=>{
+    el.addEventListener('mouseenter', ()=> ring.classList.add('hover'));
+    el.addEventListener('mouseleave', ()=> ring.classList.remove('hover'));
+  });
+})();
+
+/* ============================================================
+   MAGNETIC BUTTONS
+   ============================================================ */
+document.querySelectorAll('.magnetic').forEach(btn=>{
+  btn.addEventListener('mousemove', e=>{
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2;
+    const y = e.clientY - r.top - r.height/2;
+    btn.style.transform = `translate(${x*0.25}px, ${y*0.25}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=>{ btn.style.transform=''; });
+});
+
+/* ============================================================
+   HERO CANVAS PARTICLES
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,particles=[];
+  function resize(){ w=canvas.width=canvas.offsetWidth; h=canvas.height=canvas.offsetHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  const COUNT = Math.min(70, Math.floor(w/16));
+  for(let i=0;i<COUNT;i++){
+    particles.push({x:Math.random()*w, y:Math.random()*h, r:Math.random()*1.6+0.4, vx:(Math.random()-0.5)*0.25, vy:(Math.random()-0.5)*0.25, a:Math.random()*0.5+0.2});
+  }
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    const teal = getComputedStyle(document.body).getPropertyValue('--teal').trim();
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0) p.x=w; if(p.x>w) p.x=0; if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = teal; ctx.globalAlpha = p.a; ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const d=Math.hypot(dx,dy);
+        if(d<110){ ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=teal; ctx.globalAlpha=(1-d/110)*0.15; ctx.lineWidth=1; ctx.stroke(); ctx.globalAlpha=1; }
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* mouse-following glow */
+(function(){
+  const glow = document.getElementById('hero-glow');
+  const hero = document.getElementById('hero');
+  hero.addEventListener('mousemove', e=>{
+    const r = hero.getBoundingClientRect();
+    glow.style.left = (e.clientX-r.left)+'px';
+    glow.style.top = (e.clientY-r.top)+'px';
+    glow.style.opacity = 1;
+  });
+  hero.addEventListener('mouseleave', ()=> glow.style.opacity = 0);
+})();
+
+/* typed role text */
+(function(){
+  const roles = ['B.Com (Hons.) Student', 'Operations Head', 'Event Systems Builder', 'Web Developer', 'QR Automation Designer'];
+  const el = document.getElementById('typed-role');
+  let ri=0, ci=0, deleting=false;
+  function tick(){
+    const word = roles[ri];
+    if(!deleting){ ci++; el.textContent = word.slice(0,ci);
+      if(ci===word.length){ deleting=true; setTimeout(tick,1300); return; }
+    } else { ci--; el.textContent = word.slice(0,ci);
+      if(ci===0){ deleting=false; ri=(ri+1)%roles.length; }
+    }
+    setTimeout(tick, deleting?35:65);
+  }
+  tick();
+})();
+
+/* ============================================================
+   DARK / LIGHT TOGGLE
+   ============================================================ */
+const dockToggle = document.getElementById('dock-toggle');
+dockToggle.addEventListener('click', ()=>{
+  document.body.classList.toggle('light');
+  dockToggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); revealObserver.unobserve(en.target); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* ============================================================
+   FLIP CARD
+   ============================================================ */
+document.getElementById('flip-scene').addEventListener('click', function(){ this.classList.toggle('flipped'); });
+
+/* ============================================================
+   PROJECT LAB — render + modal
+   ============================================================ */
+const labGrid = document.getElementById('lab-grid');
+PROJECTS.forEach((p,i)=>{
+  const el = document.createElement('div');
+  el.className='folder reveal'; el.dataset.i=i;
+  el.innerHTML = `<div class="folder-icon">📁</div><h4>${p.icon} ${p.title}</h4><p class="fdesc">${p.desc}</p>
+    <div class="fmeta"><span>${p.period}</span><b>Open →</b></div>
+    ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="flive" onclick="event.stopPropagation()">🔗 Visit Live Site</a>` : ''}`;
+  labGrid.appendChild(el);
+  revealObserver.observe(el);
+});
+const modalOverlay = document.getElementById('modal-overlay');
+const modalContent = document.getElementById('modal-content');
+function openProject(i){
+  const p = PROJECTS[i];
+  modalContent.innerHTML = `
+    <h3>${p.icon} ${p.title}</h3>
+    <span class="m-period">${p.period}</span>
+    <div class="m-section"><div class="m-label">Overview</div><p style="color:var(--text-dim);font-size:.9rem;line-height:1.6;">${p.desc}</p></div>
+    <div class="m-section"><div class="m-label">What I Did</div><ul>${p.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>
+    <div class="m-section"><div class="m-label">Impact</div><div class="m-stats">${p.stats.map(s=>`<div class="m-stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div></div>
+    <div class="m-section"><div class="m-label">Tech / Skills</div><div class="m-tech">${p.tech.map(t=>`<span>${t}</span>`).join('')}</div></div>
+    ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:6px;display:inline-flex;">🔗 Visit Live Site</a>` : ''}
+  `;
+  modalOverlay.classList.add('active');
+}
+labGrid.addEventListener('click', e=>{ const f = e.target.closest('.folder'); if(f) openProject(+f.dataset.i); });
+document.getElementById('modal-close').addEventListener('click', ()=> modalOverlay.classList.remove('active'));
+modalOverlay.addEventListener('click', e=>{ if(e.target===modalOverlay) modalOverlay.classList.remove('active'); });
+
+/* ============================================================
+   SKILLS BUBBLES
+   ============================================================ */
+const bubbleField = document.getElementById('bubble-field');
+function renderSkills(group){
+  bubbleField.innerHTML='';
+  SKILLS[group].forEach(s=>{
+    const b = document.createElement('div');
+    b.className='bubble';
+    b.style.fontSize = (0.82 + (s.lvl/100)*0.35)+'rem';
+    b.innerHTML = `<span class="lvl"></span>${s.name}
+      <div class="bubble-pop"><div class="bp-title">${s.lvl}% confidence</div><div class="bp-desc">${s.desc}</div>
+      <div class="confidence-bar"><div class="confidence-fill" style="width:${s.lvl}%"></div></div></div>`;
+    bubbleField.appendChild(b);
+  });
+}
+renderSkills('ops');
+bubbleField.addEventListener('click', e=>{
+  const b = e.target.closest('.bubble'); if(!b) return;
+  const wasOpen = b.classList.contains('tapped');
+  bubbleField.querySelectorAll('.bubble.tapped').forEach(x=>x.classList.remove('tapped'));
+  if(!wasOpen) b.classList.add('tapped');
+});
+document.querySelectorAll('.skill-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.skill-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    renderSkills(tab.dataset.group);
+  });
+});
+
+/* ============================================================
+   ACHIEVEMENT COUNTERS
+   ============================================================ */
+const counters = document.querySelectorAll('.counter-num');
+const counterObserver = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const el = en.target;
+      const target = +el.dataset.target;
+      const suffix = el.dataset.suffix || '';
+      let cur = 0;
+      const step = Math.max(1, Math.round(target/60));
+      const timer = setInterval(()=>{
+        cur += step;
+        if(cur>=target){ cur=target; clearInterval(timer); }
+        el.textContent = cur + suffix;
+      }, 20);
+      counterObserver.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+counters.forEach(c=>counterObserver.observe(c));
+
+/* ============================================================
+   MAP PINS
+   ============================================================ */
+document.querySelectorAll('.map-pin').forEach(pin=>{
+  pin.addEventListener('click', ()=>{
+    const key = pin.dataset.pin;
+    document.querySelectorAll('.pin-card').forEach(c=>c.classList.remove('active'));
+    document.getElementById('pin-'+key).classList.add('active');
+  });
+});
+
+/* ============================================================
+   TECH ORBIT — planets
+   ============================================================ */
+const orbitWrap = document.getElementById('orbit-wrap');
+function renderOrbit(){
+  orbitWrap.querySelectorAll('.planet-orbit').forEach(el=>el.remove());
+  const n = ORBIT.length;
+  // clamp radius so planets (84px) always stay inside the wrap on any screen size
+  const half = orbitWrap.clientWidth/2 || 168;
+  const radius = Math.max(half - 60, 60);
+  ORBIT.forEach((t,i)=>{
+    const angle = (i/n) * 360;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'planet-orbit';
+    wrapper.style.setProperty('--start-angle', angle+'deg');
+    wrapper.style.animationDuration = (30+i*3)+'s';
+    const planet = document.createElement('div');
+    planet.className='planet';
+    planet.style.transform = `translate(-50%,-50%) translate(${radius}px,0px) rotate(${-angle}deg)`;
+    planet.innerHTML = `<div class="planet-inner">${t.name}</div><div class="orbit-tip">${t.desc}</div>`;
+    wrapper.appendChild(planet);
+    orbitWrap.appendChild(wrapper);
+  });
+}
+renderOrbit();
+window.addEventListener('resize', ()=>{
+  clearTimeout(window.__orbitResizeT);
+  window.__orbitResizeT = setTimeout(renderOrbit, 200);
+});
+orbitWrap.addEventListener('click', e=>{
+  const p = e.target.closest('.planet'); if(!p) return;
+  const wasOpen = p.classList.contains('tapped');
+  orbitWrap.querySelectorAll('.planet.tapped').forEach(x=>x.classList.remove('tapped'));
+  if(!wasOpen) p.classList.add('tapped');
+});
+
+/* ============================================================
+   GALLERY DRAG SCROLL
+   ============================================================ */
+(function(){
+  const gal = document.getElementById('gallery');
+  let isDown=false, startX, scrollLeft;
+  gal.addEventListener('mousedown', e=>{ isDown=true; gal.classList.add('dragging'); startX=e.pageX-gal.offsetLeft; scrollLeft=gal.scrollLeft; });
+  gal.addEventListener('mouseleave', ()=>{ isDown=false; gal.classList.remove('dragging'); });
+  gal.addEventListener('mouseup', ()=>{ isDown=false; gal.classList.remove('dragging'); });
+  gal.addEventListener('mousemove', e=>{
+    if(!isDown) return; e.preventDefault();
+    const x = e.pageX-gal.offsetLeft; const walk=(x-startX)*1.4;
+    gal.scrollLeft = scrollLeft - walk;
+  });
+})();
+
+/* ============================================================
+   BUILD CARDS
+   ============================================================ */
+const buildGrid = document.getElementById('build-grid');
+BUILDS.forEach((b,i)=>{
+  const el = document.createElement('div');
+  el.className='build-card'; el.dataset.i=i;
+  el.innerHTML = `<div class="bicon">${b.icon}</div><h4>${b.title}</h4><p>${b.desc}</p>`;
+  buildGrid.appendChild(el);
+});
+buildGrid.addEventListener('click', e=>{
+  const card = e.target.closest('.build-card'); if(!card) return;
+  const b = BUILDS[+card.dataset.i];
+  modalContent.innerHTML = `<h3>${b.icon} ${b.title}</h3><div class="m-section" style="margin-top:16px;"><p style="color:var(--text-dim);font-size:.92rem;line-height:1.7;">${b.detail}</p></div>`;
+  modalOverlay.classList.add('active');
+});
+
+/* ============================================================
+   CONTACT — copy buttons
+   ============================================================ */
+function copyText(text, btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.classList.add('copied');
+    showToast('📋 Copied: '+text);
+    setTimeout(()=>btn.classList.remove('copied'), 1600);
+  });
+}
+document.getElementById('copy-email').addEventListener('click', function(){ copyText('mohammadadnankhan.rak@gmail.com', this); });
+document.getElementById('copy-phone').addEventListener('click', function(){ copyText('+91 8115784828', this); });
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+function showToast(msg){
+  const host = document.getElementById('toast-host');
+  const t = document.createElement('div');
+  t.className='toast'; t.textContent = msg;
+  host.appendChild(t);
+  requestAnimationFrame(()=> t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),400); }, 3600);
+}
+
+/* ============================================================
+   CHINTUGPT — AI CV ASSISTANT
+   Talks to a secure Netlify Function (/.netlify/functions/chat)
+   which proxies the Gemini API. No API key ever touches the
+   frontend — only { message } is sent, and only text comes back.
+   ============================================================ */
+(function(){
+  const toggle = document.getElementById('terminal-toggle');
+  const term = document.getElementById('terminal');
+  const output = document.getElementById('term-output');
+  const input = document.getElementById('term-input');
+  const quick = document.getElementById('term-quick');
+  const histUpBtn = document.getElementById('term-hist-up');
+  const histDownBtn = document.getElementById('term-hist-down');
+
+  const CHAT_ENDPOINT = '/.netlify/functions/chat';
+  const ERROR_TEXT = '⚠ Unable to contact ChintuGPT right now. Please try again later.';
+
+  const HELP_TEXT =
+`Available commands:
+help   — show this help message
+clear  — clear the chat
+
+Or just ask me anything about Mohammad Adnan Khan, e.g.:
+education · skills · projects · experience · leadership · achievements · resume · contact`;
+
+  let welcomed = false;
+  let isLoading = false;
+
+  // ---- open/close ----
+  toggle.addEventListener('click', ()=>{
+    term.classList.toggle('open');
+    if(term.classList.contains('open')){
+      input.focus();
+      if(!welcomed){ showWelcome(); welcomed = true; }
+    }
+  });
+
+  // ---- basic line printer (system/help/muted text) ----
+  function printLine(text, cls){
+    const l = document.createElement('div');
+    l.className = 'line ' + (cls || '');
+    l.textContent = text;
+    output.appendChild(l);
+    output.scrollTop = output.scrollHeight;
+  }
+
+  // ---- chat bubble printer: returns the element to fill with text ----
+  function printMessage(label, cls){
+    const wrap = document.createElement('div');
+    wrap.className = 'line chat-msg ' + (cls || '');
+    const tag = document.createElement('span');
+    tag.className = 'chat-tag';
+    tag.textContent = label;
+    const body = document.createElement('span');
+    body.className = 'chat-body';
+    wrap.appendChild(tag);
+    wrap.appendChild(body);
+    output.appendChild(wrap);
+    output.scrollTop = output.scrollHeight;
+    return { wrap, body };
+  }
+
+  function showWelcome(){
+    printLine('Welcome to ChintuGPT 👋', 'muted');
+    printLine("I'm Mohammad Adnan Khan's AI CV Assistant.", 'muted');
+    printLine('', 'muted');
+    printLine('I can answer questions about:', 'muted');
+    printLine('• Education\n• Skills\n• Projects\n• Experience\n• Leadership\n• Achievements\n• Resume\n• Contact Information', 'muted');
+    printLine('', 'muted');
+    printLine('Try asking:', 'muted');
+    printLine('• Tell me about yourself\n• Show your projects\n• What technologies do you know?\n• Tell me about Nature Nexus\n• What experience do you have?', 'muted');
+  }
+
+  // ---- typewriter animation for AI responses ----
+  function typeText(el, text, speed){
+    speed = speed || 14;
+    return new Promise(resolve=>{
+      let i = 0;
+      (function step(){
+        el.textContent = text.slice(0, i);
+        output.scrollTop = output.scrollHeight;
+        if(i >= text.length){ resolve(); return; }
+        i++;
+        setTimeout(step, speed);
+      })();
+    });
+  }
+
+  // ---- message history (Up/Down keys + mobile ▲▼ buttons) ----
+  const history = [];
+  let histIndex = -1;
+
+  function stepHistory(dir){
+    if(history.length===0) return;
+    histIndex += dir;
+    if(histIndex < 0) histIndex = 0;
+    if(histIndex >= history.length){ histIndex = history.length; input.value=''; return; }
+    input.value = history[histIndex];
+    input.focus();
+    const v = input.value; input.setSelectionRange(v.length, v.length);
+  }
+  histUpBtn.addEventListener('click', ()=> stepHistory(-1));
+  histDownBtn.addEventListener('click', ()=> stepHistory(1));
+
+  // ---- talk to the Netlify function (Gemini proxy) ----
+  async function sendToAI(message){
+    if(isLoading) return;
+    isLoading = true;
+    input.disabled = true;
+
+    const { wrap, body } = printMessage('🤖 ChintuGPT', 'assistant-msg thinking');
+    body.textContent = 'ChintuGPT is thinking...';
+    output.scrollTop = output.scrollHeight;
+
+    try{
+      const res = await fetch(CHAT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+      if(!res.ok) throw new Error('Request failed with status ' + res.status);
+      const data = await res.json();
+      const reply = (data && (data.reply || data.message || data.text)) ||
+                    "Hmm, I didn't get a proper reply that time — try asking again.";
+      wrap.classList.remove('thinking');
+      body.textContent = '';
+      await typeText(body, reply);
+    } catch(err){
+      wrap.classList.remove('thinking');
+      body.textContent = '';
+      await typeText(body, ERROR_TEXT);
+    } finally {
+      isLoading = false;
+      input.disabled = false;
+      input.focus();
+      output.scrollTop = output.scrollHeight;
+    }
+  }
+
+  // ---- route each submitted message ----
+  function runCommand(raw){
+    raw = raw.trim();
+    if(raw === '' || isLoading) return;
+
+    printMessage('» You', 'user-msg').body.textContent = raw;
+    history.push(raw); histIndex = history.length;
+
+    const cmdWord = raw.toLowerCase();
+
+    // local, instant commands — everything else goes to the AI
+    if(cmdWord === 'clear'){ output.innerHTML = ''; welcomed = false; showWelcome(); welcomed = true; return; }
+    if(cmdWord === 'help'){ printLine(HELP_TEXT, 'muted'); return; }
+    if(cmdWord === 'resume'){ printLine('Opening CV...', 'muted'); window.open('Mohammad_Adnan_Khan_CV.html', '_blank'); return; }
+    if(cmdWord === 'adnan'){ printLine("👋 Hey, that's me.", 'muted'); triggerNameEgg(); return; }
+    if(cmdWord === 'konami' || cmdWord === 'egg' || cmdWord === 'easteregg'){ printLine('🎮 Unlocked from ChintuGPT.', 'muted'); triggerKonamiEgg(); return; }
+
+    sendToAI(raw);
+  }
+
+  input.addEventListener('keydown', e=>{
+    if(e.key === 'Enter'){
+      if(input.disabled) return;
+      const raw = input.value; input.value = ''; runCommand(raw);
+    } else if(e.key === 'ArrowUp'){ e.preventDefault(); stepHistory(-1); }
+    else if(e.key === 'ArrowDown'){ e.preventDefault(); stepHistory(1); }
+  });
+
+  // ---- clickable suggested questions ----
+  quick.addEventListener('click', e=>{
+    const btn = e.target.closest('button'); if(!btn || input.disabled) return;
+    input.focus();
+    runCommand(btn.dataset.c);
+  });
+})();
+
+/* ============================================================
+   EASTER EGGS — Konami code + typing "adnan" (desktop)
+   + swipe gesture + logo tap (mobile)
+   ============================================================ */
+let eggKonamiFired = false, eggNameFired = false;
+function triggerKonamiEgg(){
+  if(eggKonamiFired) return; eggKonamiFired = true;
+  showToast('🎮 Konami unlocked! You clearly pay attention to detail.');
+  setTimeout(()=>eggKonamiFired=false, 4000);
+}
+function triggerNameEgg(){
+  if(eggNameFired) return; eggNameFired = true;
+  showToast("👋 You typed my name. Hi. That's dedication.");
+  setTimeout(()=>eggNameFired=false, 4000);
+}
+
+(function(){
+  // Desktop: keyboard Konami code + typing "adnan"
+  const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let kBuf = [];
+  let wBuf = '';
+  window.addEventListener('keydown', e=>{
+    kBuf.push(e.key); kBuf = kBuf.slice(-konami.length);
+    if(kBuf.join(',')===konami.join(',')){ triggerKonamiEgg(); }
+
+    if(e.key.length===1){ wBuf += e.key.toLowerCase(); wBuf = wBuf.slice(-10);
+      if(wBuf.includes('adnan')){ triggerNameEgg(); wBuf=''; }
+    }
+  });
+
+  // Mobile: swipe gesture equivalent of the Konami code
+  // (up, up, down, down, left, right, left, right)
+  const swipePattern = ['up','up','down','down','left','right','left','right'];
+  let sBuf = [];
+  let touchStartX=0, touchStartY=0;
+  window.addEventListener('touchstart', e=>{
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY;
+  }, {passive:true});
+  window.addEventListener('touchend', e=>{
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX, dy = t.clientY - touchStartY;
+    if(Math.hypot(dx,dy) < 40) return; // ignore taps/small movements
+    let dir;
+    if(Math.abs(dx) > Math.abs(dy)) dir = dx > 0 ? 'right' : 'left';
+    else dir = dy > 0 ? 'down' : 'up';
+    sBuf.push(dir); sBuf = sBuf.slice(-swipePattern.length);
+    if(sBuf.join(',')===swipePattern.join(',')){ triggerKonamiEgg(); sBuf=[]; }
+  }, {passive:true});
+
+  // Mobile: tap the "AK" logo badge 5x quickly (works on desktop too)
+  const logo = document.getElementById('dock-logo');
+  let tapCount = 0, tapTimer = null;
+  if(logo){
+    logo.addEventListener('click', ()=>{
+      tapCount++;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(()=>{ tapCount = 0; }, 1200);
+      if(tapCount >= 5){ tapCount = 0; triggerNameEgg(); }
+    });
+  }
+})();
+
+/* hidden QR easter egg placed in footer sky */
+(function(){
+  const footer = document.getElementById('site-footer');
+  const qr = document.createElement('div');
+  qr.className='hidden-qr'; qr.textContent='▦'; qr.style.color='#fff'; qr.style.fontSize='13px';
+  qr.style.left = (20+Math.random()*60)+'%'; qr.style.top = (15+Math.random()*40)+'%';
+  qr.addEventListener('click', (e)=>{ e.stopPropagation(); showToast('🔍 Hidden QR found! Badge unlocked: Detective 🕵️'); });
+  footer.appendChild(qr);
+})();
+
+/* ============================================================
+   FOOTER NIGHT SKY
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('sky-canvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,stars=[],shoot=null;
+  function resize(){ w=canvas.width=canvas.offsetWidth; h=canvas.height=canvas.offsetHeight;
+    stars = Array.from({length:120}, ()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+0.2,a:Math.random(), s:Math.random()*0.02+0.005}));
+  }
+  window.addEventListener('resize', resize); resize();
+  function maybeShoot(){ if(!shoot && Math.random()<0.006){ const x=Math.random()*w*0.6, y=Math.random()*h*0.3; shoot={x,y,len:0,vx:6,vy:3}; } }
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{
+      s.a += s.s; if(s.a>1||s.a<0) s.s*=-1;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='#fff'; ctx.globalAlpha=Math.abs(Math.sin(s.a*3))*0.8+0.15; ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    maybeShoot();
+    if(shoot){
+      shoot.x+=shoot.vx; shoot.y+=shoot.vy; shoot.len+=8;
+      const grad = ctx.createLinearGradient(shoot.x,shoot.y,shoot.x-shoot.len*0.6,shoot.y-shoot.len*0.3);
+      grad.addColorStop(0,'rgba(255,255,255,0.9)'); grad.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.strokeStyle=grad; ctx.lineWidth=2; ctx.beginPath();
+      ctx.moveTo(shoot.x,shoot.y); ctx.lineTo(shoot.x-shoot.len*0.6, shoot.y-shoot.len*0.3); ctx.stroke();
+      if(shoot.x>w+50||shoot.y>h+50) shoot=null;
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ============================================================
+   WELCOME TOAST
+   ============================================================ */
+setTimeout(()=> showToast('👋 Welcome! Chat with ChintuGPT, flip the card, or find the hidden QR.'), 3200);
+</script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Adnan Khan — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #1E293B;
+    --navy-dark:  #0F172A;
+    --teal:       #14B8A6;
+    --teal-dim:   #0D9488;
+    --gold:       #C8922A;
+    --gold-lite:  #FEF3C7;
+    --white:      #FFFFFF;
+    --light-bg:   #F8FAFC;
+    --mid-gray:   #475569;
+    --line-clr:   #E2E8F0;
+    --sb-text:    #CBD5E1;
+    --sb-muted:   #94A3B8;
+    --sb-dim:     #1E3A5A;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'DM Sans', sans-serif;
+  }
+
+  html { font-size: 10px; }
+
+  body {
+    font-family: var(--font-sans);
+    background: #dde2e8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* A4 page */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 63mm 1fr;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
+    position: relative;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* Teal spine */
+  .page::after {
+    content: '';
+    position: absolute;
+    left: 63mm;
+    top: 0; bottom: 0;
+    width: 2.5px;
+    background: var(--teal);
+    z-index: 10;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sb-name-block {
+    background: var(--teal-dim);
+    padding: 8mm 6mm 0;
+    position: relative;
+  }
+
+  .sb-name-block .name-line {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.55rem;
+    color: var(--white);
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+  }
+
+  .sb-role-strip {
+    background: var(--navy-dark);
+    margin: 4mm -0px 0;
+    padding: 2.5mm 6mm;
+    text-align: center;
+  }
+
+  .sb-role-strip span {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sb-body {
+    padding: 5mm 6mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5mm;
+    flex: 1;
+  }
+
+  .sb-section-title {
+    font-size: 0.63rem;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 0.7px solid var(--teal);
+    margin-bottom: 3mm;
+  }
+
+  /* Contact */
+  .contact-list { display: flex; flex-direction: column; gap: 3.2mm; }
+  .contact-item { display: flex; align-items: flex-start; gap: 3mm; }
+  .contact-icon { color: var(--teal); font-size: 0.72rem; flex-shrink: 0; margin-top: 0.5px; }
+  .contact-text { font-size: 0.68rem; color: var(--sb-text); line-height: 1.4; word-break: break-all; }
+
+  /* Metrics */
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2mm; }
+  .metric-box {
+    background: var(--navy-dark);
+    border: 0.7px solid var(--teal);
+    border-radius: 2px;
+    padding: 2.5mm 1mm;
+    text-align: center;
+  }
+  .metric-val { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .metric-lbl { font-size: 0.55rem; color: var(--sb-muted); margin-top: 1.5mm; line-height: 1.3; }
+
+  /* Skills */
+  .skill-group { margin-bottom: 3mm; }
+  .skill-group-name { font-size: 0.58rem; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.8mm; }
+  .skill-bar {
+    background: var(--sb-dim);
+    border-radius: 2px;
+    padding: 1.8mm 3mm 1.8mm 5mm;
+    display: flex; align-items: center; gap: 3mm;
+    margin-bottom: 1.2mm;
+    position: relative;
+  }
+  .skill-bar::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+  .skill-bar span { font-size: 0.65rem; color: var(--sb-text); padding-left: 6px; }
+
+  /* Education */
+  .edu-item { margin-bottom: 3mm; }
+  .edu-deg { font-size: 0.72rem; font-weight: 600; color: var(--white); }
+  .edu-uni { font-size: 0.65rem; color: var(--teal); margin-top: 1mm; }
+  .edu-inst { font-size: 0.62rem; color: var(--sb-muted); font-style: italic; margin-top: 0.8mm; }
+  .edu-year { font-size: 0.62rem; color: var(--gold); font-weight: 600; margin-top: 0.8mm; }
+
+  /* Languages */
+  .lang-item { display: flex; align-items: center; gap: 2mm; margin-bottom: 2.5mm; }
+  .lang-name { font-size: 0.7rem; font-weight: 600; color: var(--white); }
+  .lang-level { font-size: 0.65rem; color: var(--sb-muted); }
+
+  /* Focus tags */
+  .focus-tags { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+  .focus-tag {
+    background: var(--sb-dim);
+    border-radius: 2px;
+    padding: 1.2mm 2.5mm;
+    font-size: 0.6rem;
+    color: var(--teal);
+  }
+
+  /* Sidebar footer */
+  .sb-footer {
+    background: var(--teal-dim);
+    padding: 2mm 6mm;
+    text-align: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    background: var(--light-bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Main header */
+  .main-header {
+    background: var(--navy);
+    padding: 7mm 7mm 5mm;
+  }
+
+  .main-name {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
+  .main-role {
+    font-size: 0.72rem;
+    color: var(--teal);
+    margin-top: 2mm;
+    letter-spacing: 0.04em;
+  }
+
+  .main-rule {
+    height: 1px;
+    background: var(--gold);
+    margin: 2.5mm 0;
+  }
+
+  .main-summary {
+    font-size: 0.72rem;
+    color: var(--sb-text);
+    line-height: 1.65;
+  }
+
+  /* Main body */
+  .main-body {
+    padding: 4.5mm 7mm 3mm;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5mm;
+    flex: 1;
+  }
+
+  .main-section-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--teal);
+    margin-bottom: 3mm;
+  }
+
+  /* Experience / project entry */
+  .entry { margin-bottom: 3.5mm; }
+  .entry-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5mm; }
+  .entry-title { font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+  .entry-period { font-size: 0.68rem; font-weight: 600; color: var(--gold); white-space: nowrap; margin-left: 3mm; flex-shrink: 0; }
+  .entry-org { font-size: 0.7rem; font-style: italic; color: var(--teal); margin-bottom: 2.5mm; }
+  .entry-divider { height: 0.4px; background: var(--line-clr); margin: 3mm 0; }
+
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 1.5mm; }
+  .bullets li {
+    font-size: 0.72rem;
+    color: var(--mid-gray);
+    line-height: 1.55;
+    padding-left: 4.5mm;
+    position: relative;
+  }
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 5px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+  .bullets li .metric { color: var(--gold); font-weight: 700; }
+
+  /* Achievements */
+  .ach-item { margin-bottom: 3mm; }
+  .ach-pill {
+    display: inline-block;
+    background: var(--gold-lite);
+    border-radius: 2px;
+    padding: 1.2mm 3mm;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 1.2mm;
+  }
+  .ach-desc { font-size: 0.68rem; color: var(--mid-gray); font-style: italic; padding-left: 3mm; }
+
+  /* Competencies grid */
+  .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; }
+  .comp-col {}
+  .comp-col-header {
+    background: var(--navy);
+    border-radius: 2px;
+    padding: 2mm;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 1.5mm;
+    letter-spacing: 0.05em;
+  }
+  .comp-item {
+    background: var(--white);
+    border: 0.4px solid var(--line-clr);
+    border-radius: 2px;
+    padding: 1.5mm 2mm 1.5mm 5mm;
+    font-size: 0.67rem;
+    color: var(--mid-gray);
+    margin-bottom: 1.2mm;
+    position: relative;
+  }
+  .comp-item::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  /* Info bar */
+  .info-bar {
+    background: var(--navy);
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 3mm 4mm;
+    margin-top: 1mm;
+    gap: 2mm;
+  }
+  .info-item {}
+  .info-label { font-size: 0.58rem; font-weight: 600; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1mm; }
+  .info-val { font-size: 0.65rem; color: var(--sb-text); line-height: 1.4; word-break: break-all; }
+
+  /* Main footer */
+  .main-footer {
+    background: var(--navy);
+    padding: 2mm 7mm;
+    text-align: center;
+    font-size: 0.58rem;
+    color: var(--sb-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: none; padding: 0; }
+    .page {
+      box-shadow: none;
+      width: 210mm;
+      min-height: 297mm;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════ SIDEBAR ══════════════ -->
+  <aside class="sidebar">
+
+    <div class="sb-name-block">
+      <div class="name-line">MOHAMMAD</div>
+      <div class="name-line">ADNAN KHAN</div>
+      <div class="sb-role-strip">
+        <span>Operations · Business Systems · Digital</span>
+      </div>
+    </div>
+
+    <div class="sb-body">
+
+      <!-- CONTACT -->
+      <div>
+        <div class="sb-section-title">Contact</div>
+        <div class="contact-list">
+          <div class="contact-item">
+            <span class="contact-icon">✦</span>
+            <span class="contact-text">+91 8115784828</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">@</span>
+            <span class="contact-text">mohammadadnankhan.rak@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">◆</span>
+            <span class="contact-text">Ghazipur, Uttar Pradesh</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">↗</span>
+            <span class="contact-text">adnan-nn26nexus.netlify.app</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KEY METRICS -->
+      <div>
+        <div class="sb-section-title">Key Metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-val">300+</div>
+            <div class="metric-lbl">Registrations<br>Managed</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">800</div>
+            <div class="metric-lbl">Daily Users<br>(Peak)</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">5+</div>
+            <div class="metric-lbl">Events<br>Executed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div>
+        <div class="sb-section-title">Skills</div>
+        <div class="skill-group">
+          <div class="skill-group-name">Operations</div>
+          <div class="skill-bar"><span>Event Execution & Planning</span></div>
+          <div class="skill-bar"><span>Workflow Design</span></div>
+          <div class="skill-bar"><span>Team Coordination</span></div>
+          <div class="skill-bar"><span>Process Optimization</span></div>
+          <div class="skill-bar"><span>Business Ops Support</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Finance & Data</div>
+          <div class="skill-bar"><span>Financial Accounting</span></div>
+          <div class="skill-bar"><span>Tally ERP</span></div>
+          <div class="skill-bar"><span>MS Excel</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Digital Tools</div>
+          <div class="skill-bar"><span>HTML / CSS / JavaScript</span></div>
+          <div class="skill-bar"><span>QR Code Systems</span></div>
+          <div class="skill-bar"><span>Netlify Deployment</span></div>
+          <div class="skill-bar"><span>Canva & Visual Design</span></div>
+          <div class="skill-bar"><span>Video Editing</span></div>
+        </div>
+      </div>
+
+      <!-- EDUCATION -->
+      <div>
+        <div class="sb-section-title">Education</div>
+        <div class="edu-item">
+          <div class="edu-deg">B.Com (Hons.)</div>
+          <div class="edu-uni">Delhi University</div>
+          <div class="edu-inst">Zakir Husain Delhi College</div>
+          <div class="edu-year">2023 – Present</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-deg">Class XII, Commerce</div>
+          <div class="edu-uni">CBSE Board</div>
+          <div class="edu-inst">Distinction in Accountancy</div>
+        </div>
+      </div>
+
+      <!-- LANGUAGES -->
+      <div>
+        <div class="sb-section-title">Languages</div>
+        <div class="lang-item">
+          <span class="lang-name">Hindi</span>
+          <span class="lang-level">— Native</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level">— Professional</span>
+        </div>
+      </div>
+
+      <!-- FOCUS AREAS -->
+      <div>
+        <div class="sb-section-title">Focus Areas</div>
+        <div class="focus-tags">
+          <span class="focus-tag">Business Operations</span>
+          <span class="focus-tag">Workflow Systems</span>
+          <span class="focus-tag">Process Optimization</span>
+          <span class="focus-tag">Digital Execution</span>
+          <span class="focus-tag">Event Management</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sb-footer">Operations Head</div>
+
+  </aside>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <main class="main">
+
+    <div class="main-header">
+      <div class="main-name">Mohammad Adnan Khan</div>
+      <div class="main-role">Operations &amp; Business Systems &nbsp;·&nbsp; B.Com (Hons.), Delhi University &nbsp;·&nbsp; Zakir Husain Delhi College</div>
+      <div class="main-rule"></div>
+      <div class="main-summary">
+        B.Com (Hons.) student at Delhi University with hands-on experience in operations management, event execution, and digital workflow systems. Proven ability to design scalable systems handling <strong style="color:var(--gold)">300+ participants</strong> and <strong style="color:var(--gold)">600–800 daily users</strong>. Skilled in process optimization, cross-functional coordination, and applying digital tools to improve operational efficiency.
+      </div>
+    </div>
+
+    <div class="main-body">
+
+      <!-- EXPERIENCE -->
+      <section>
+        <div class="main-section-title">Experience</div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">Operations Head</span>
+            <span class="entry-period">Aug 2023 – Present</span>
+          </div>
+          <div class="entry-org">College Technical Society — Delhi</div>
+          <ul class="bullets">
+            <li>Managed end-to-end execution of <span class="metric">5+</span> college events including planning, logistics, and team coordination</li>
+            <li>Designed workflows and task allocation systems to improve operational efficiency across events</li>
+            <li>Coordinated multi-function teams and managed live operations with minimal disruption</li>
+          </ul>
+        </div>
+
+        <div class="entry-divider"></div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">Health Camp &amp; E-Commerce Operations</span>
+            <span class="entry-period">Mar 2023 – Aug 2023</span>
+          </div>
+          <div class="entry-org">Freelance / Independent</div>
+          <ul class="bullets">
+            <li>Coordinated logistics and scheduling for health camp operations; managed communication with doctors and organizers</li>
+            <li>Handled Meesho-based e-commerce operations including product listing and order processing workflows</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section>
+        <div class="main-section-title">Projects</div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">Nature Nexus — Event Management System</span>
+            <span class="entry-period">Jan – Mar 2024</span>
+          </div>
+          <ul class="bullets">
+            <li>Built registration platform and QR-based entry system using HTML, CSS, JavaScript; deployed on Netlify</li>
+            <li>Managed <span class="metric">300+</span> participants; handled <span class="metric">600–800</span> daily users during peak event activity</li>
+            <li>Reduced manual work through structured digital workflows with zero major operational failures</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">Treasure Hunt — QR-Based Automation System</span>
+            <span class="entry-period">Sep – Nov 2023</span>
+          </div>
+          <ul class="bullets">
+            <li>Designed multi-stage QR system for automated participant progression; eliminated manual tracking</li>
+            <li>Integrated digital validation into event flow, reducing dependency on manual coordination</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">LAN Event — Live Leaderboard System</span>
+            <span class="entry-period">Dec 2023</span>
+          </div>
+          <ul class="bullets">
+            <li>Implemented real-time leaderboard with controlled update logic ensuring fair and transparent competition</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- FREELANCE -->
+      <section>
+        <div class="main-section-title">Freelance Work</div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">Presentation Design — Educational Content</span>
+            <span class="entry-period">Ongoing</span>
+          </div>
+          <ul class="bullets">
+            <li>Designed PowerPoint presentations for YouTube-based educator; structured content for clarity and student engagement</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-title">YouTube Thumbnail &amp; Visual Content Design</span>
+            <span class="entry-period">Ongoing</span>
+          </div>
+          <ul class="bullets">
+            <li>Created thumbnails and visual assets applying layout, typography, and brand consistency principles</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ACHIEVEMENTS -->
+      <section>
+        <div class="main-section-title">Achievements</div>
+
+        <div class="ach-item">
+          <div class="ach-pill">300+ Registrations &nbsp;·&nbsp; 800 Daily Users</div>
+          <div class="ach-desc">Live event system at scale — Nature Nexus event</div>
+        </div>
+        <div class="ach-item">
+          <div class="ach-pill">1st Position — School Science Exhibition</div>
+          <div class="ach-desc">Arduino-based project, school level recognition</div>
+        </div>
+        <div class="ach-item">
+          <div class="ach-pill">Appointed Operations Head</div>
+          <div class="ach-desc">Based on consistent execution performance in technical society</div>
+        </div>
+      </section>
+
+      <!-- CORE COMPETENCIES -->
+      <section>
+        <div class="main-section-title">Core Competencies</div>
+        <div class="comp-grid">
+          <div class="comp-col">
+            <div class="comp-col-header">Operations</div>
+            <div class="comp-item">End-to-End Event Mgmt</div>
+            <div class="comp-item">Workflow Automation</div>
+            <div class="comp-item">Process Improvement</div>
+            <div class="comp-item">Stakeholder Coordination</div>
+          </div>
+          <div class="comp-col">
+            <div class="comp-col-header">Finance &amp; Data</div>
+            <div class="comp-item">Financial Accounting</div>
+            <div class="comp-item">Tally ERP</div>
+            <div class="comp-item">Excel Analysis</div>
+            <div class="comp-item">E-Commerce Ops</div>
+          </div>
+          <div class="comp-col">
+            <div class="comp-col-header">Digital Execution</div>
+            <div class="comp-item">Frontend Development</div>
+            <div class="comp-item">QR System Design</div>
+            <div class="comp-item">Web Deployment</div>
+            <div class="comp-item">Visual Design</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFO BAR -->
+      <div class="info-bar">
+        <div class="info-item">
+          <div class="info-label">Portfolio</div>
+          <div class="info-val">adnan-nn26nexus.netlify.app</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Email</div>
+          <div class="info-val">mohammadadnankhan.rak@gmail.com</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Location</div>
+          <div class="info-val">Ghazipur, Uttar Pradesh, India</div>
+        </div>
+      </div>
+
+    </div><!-- /main-body -->
+
+    <div class="main-footer">
+      B.Com (Hons.) &nbsp;·&nbsp; Delhi University &nbsp;·&nbsp; Operations &amp; Business Systems &nbsp;·&nbsp; Digital Execution
+    </div>
+
+  </main>
+
+</div>
+</body>
+</html>
