@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Adnan Khan — CV</title>
+<style>
+  @page { size: A4; margin: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:   #000000;
+    --text:  #1a1a1a;
+    --soft:  #444444;
+    --rule:  #888888;
+    --hair:  #cccccc;
+    --tint:  #efefef;
+    --font:  Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  }
+
+  html, body { background: #d8d8d8; }
+  body {
+    font-family: var(--font);
+    color: var(--text);
+    display: flex; justify-content: center;
+    padding: 16px 0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm; height: 297mm;
+    background: #fff;
+    padding: 7mm 9mm 6mm;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    font-size: 8.1pt; line-height: 1.3;
+  }
+
+  /* ── Header ── */
+  .head { border-bottom: 1.6pt solid var(--ink); padding-bottom: 2.2mm; }
+  .name { font-size: 22pt; font-weight: 700; color: var(--ink); letter-spacing: 0.3pt; line-height: 1.1; }
+  .role { font-size: 9.6pt; font-weight: 700; color: var(--text); margin-top: 1.4mm; }
+  .summary { margin-top: 1.6mm; font-size: 8.1pt; line-height: 1.38; color: var(--text); }
+  .summary b { color: var(--ink); }
+
+  /* ── Columns ── */
+  .cols { display: grid; grid-template-columns: 47mm 1fr; column-gap: 4mm; margin-top: 2.6mm; flex: 1; min-height: 0; }
+  .side { border-right: 0.6pt solid var(--hair); padding-right: 3mm; display: flex; flex-direction: column; gap: 2.6mm; }
+  .main { display: flex; flex-direction: column; gap: 2.4mm; }
+
+  h2 {
+    font-size: 8.6pt; font-weight: 700; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 0.8pt;
+    border-bottom: 0.9pt solid var(--ink);
+    padding-bottom: 0.6mm; margin-bottom: 1.4mm;
+  }
+
+  /* Sidebar blocks */
+  .contact div { margin-bottom: 1.1mm; white-space: nowrap; }
+  .contact .em { font-size: 7.3pt; letter-spacing: -0.1pt; }
+
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5mm; }
+  .metric { border: 0.8pt solid var(--ink); text-align: center; padding: 1.6mm 0.5mm; }
+  .metric .v { font-size: 13pt; font-weight: 700; color: var(--ink); line-height: 1; }
+  .metric .l { font-size: 6.6pt; color: var(--soft); margin-top: 1mm; line-height: 1.2; }
+
+  .sg { margin-bottom: 1.2mm; }
+  .sg-name { font-size: 8pt; font-weight: 700; color: var(--ink); margin-bottom: 0.5mm; text-decoration: underline; text-underline-offset: 1.5pt; text-decoration-thickness: 0.5pt; }
+  ul.plain { list-style: none; }
+  ul.plain li { padding-left: 3.4mm; position: relative; margin-bottom: 0.3mm; }
+  ul.plain li::before { content: ""; position: absolute; left: 0.4mm; top: 1.45mm; width: 1.2mm; height: 1.2mm; background: var(--ink); }
+
+  .sl { color: var(--text); }
+  .edu { margin-bottom: 1.2mm; }
+  .edu .d { font-weight: 700; color: var(--ink); }
+  .edu .u { color: var(--text); }
+  .edu .i { font-style: italic; color: var(--soft); }
+
+  .lang b { color: var(--ink); }
+  .lang div { margin-bottom: 0.6mm; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 1.2mm; }
+  .tag { border: 0.6pt solid var(--rule); padding: 0.5mm 1.8mm; font-size: 7.6pt; }
+
+  /* Main blocks */
+  .entry { margin-bottom: 1.6mm; }
+  .entry:last-child { margin-bottom: 0; }
+  .et { font-weight: 700; font-size: 8.8pt; color: var(--ink); }
+  .et .live { font-weight: 700; font-style: italic; }
+  .eo { font-style: italic; color: var(--soft); margin-bottom: 0.6mm; }
+  ul.b { list-style: none; }
+  ul.b li { position: relative; padding-left: 3.6mm; margin-bottom: 0.5mm; }
+  ul.b li::before { content: ""; position: absolute; left: 0.4mm; top: 1.45mm; width: 1.2mm; height: 1.2mm; background: var(--ink); }
+  .m { font-weight: 700; color: var(--ink); }
+  .sep { display:none; }
+
+  .ach { margin-bottom: 1.1mm; }
+  .ach .t { font-weight: 700; color: var(--ink); background: var(--tint); display: inline-block; padding: 0.4mm 2mm; border-left: 1.6pt solid var(--ink); }
+  .ach .t.nss { }
+  .ach .ds { font-style: italic; color: var(--soft); padding-left: 3.4mm; margin-top: 0.4mm; }
+
+  .comp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+  .comp .ch { font-weight: 700; color: var(--ink); border-bottom: 0.5pt solid var(--rule); margin-bottom: 0.8mm; padding-bottom: 0.4mm; }
+
+  .info { border: 0.9pt solid var(--ink); display: grid; grid-template-columns: 1fr 1.45fr 1.1fr; gap: 3mm; padding: 1mm 3mm; }
+  .info .il { font-size: 7.2pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6pt; color: var(--soft); }
+  .info .iv { white-space: nowrap; font-size: 7.6pt; color: var(--ink); }
+
+  .foot { margin-top: 1.6mm; border-top: 0.6pt solid var(--rule); padding-top: 1.6mm; text-align: center; font-size: 7.4pt; color: var(--soft); }
+
+  @media print {
+    html, body { background: #fff; padding: 0; display: block; }
+    .page { margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div class="name">Mohammad Adnan Khan</div>
+    <div class="role">General Secretary, Panchtatva &nbsp;·&nbsp; TECHNICAL Head &nbsp;·&nbsp; NSS Volunteer</div>
+    <div class="summary">
+      B.Com (Hons.) student at Delhi University; General Secretary of Panchtatva and NSS volunteer, with hands-on experience in operations management, event execution, and digital workflow systems. Proven ability to design scalable systems handling <b>300+ participants</b> and <b>600–800 daily users</b>. Skilled in process optimization, cross-functional coordination, and applying digital tools to improve efficiency.
+    </div>
+  </div>
+
+  <div class="cols">
+
+    <!-- ═════ LEFT ═════ -->
+    <aside class="side">
+
+      <section>
+        <h2>Contact</h2>
+        <div class="contact">
+          <div>+91 8115784828</div>
+          <div class="em">mohammadadnankhan.rak@gmail.com</div>
+          <div>Ghazipur, Uttar Pradesh</div>
+          <div>adnanresume.netlify.app</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Key Metrics</h2>
+        <div class="metrics">
+          <div class="metric"><div class="v">300+</div><div class="l">Registrations Managed</div></div>
+          <div class="metric"><div class="v">800</div><div class="l">Daily Users (Peak)</div></div>
+          <div class="metric"><div class="v">6+</div><div class="l">Events Executed</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Skills</h2>
+        <div class="sg"><div class="sg-name">Operations</div><div class="sl">Event Execution &amp; Planning · Workflow Design · Team Coordination · Process Optimization · Business Ops Support</div></div>
+        <div class="sg"><div class="sg-name">Finance &amp; Data</div><div class="sl">Financial Accounting · Tally ERP · MS Excel</div></div>
+        <div class="sg"><div class="sg-name">Digital Tools</div><div class="sl">HTML / CSS / JavaScript · QR Code Systems · Netlify Deployment · Canva &amp; Visual Design · Control Room / AV Coordination</div></div>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <div class="edu">
+          <div class="d">B.Com (Hons.)</div>
+          <div class="u">Delhi University</div>
+          <div class="i">Zakir Husain Delhi College (eve)</div>
+        </div>
+        <div class="edu">
+          <div class="d">Class XII, Commerce</div>
+          <div class="u">CBSE Board</div>
+          <div class="i">Distinction in Accountancy</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Languages</h2>
+        <div class="lang">
+          <div><b>Hindi</b> — Native</div>
+          <div><b>English</b> — Professional</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Focus Areas</h2>
+        <div class="tags">
+          <span class="tag">Business Operations</span>
+          <span class="tag">Workflow Systems</span>
+          <span class="tag">Process Optimization</span>
+          <span class="tag">Digital Execution</span>
+          <span class="tag">Event Management</span>
+          <span class="tag">NSS Volunteering</span>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ═════ RIGHT ═════ -->
+    <main class="main">
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="entry">
+          <div class="et">General Secretary &amp; TECHNICAL Head — Panchtatva <span class="live">(Live Site)</span></div>
+          <div class="eo">Environmental Studies Society, Zakir Husain Delhi College (Evening)</div>
+          <ul class="b">
+            <li>Lead the society's operations — managed end-to-end execution of <span class="m">6+</span> events including planning, logistics, workflows and team coordination</li>
+            <li>Designed and built the society's full live website — events, gallery, join/registration, admin system and an in-site AI assistant — and designed posters and visual campaigns for its events</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="et">NSS Volunteer — Event Management &amp; Control Room</div>
+          <div class="eo">National Service Scheme (NSS) — Zakir Husain Delhi College (Evening)</div>
+          <ul class="b">
+            <li>Supported management of NSS events and operated the auditorium control room, coordinating AV cues and show-flow with the stage</li>
+          </ul>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="entry">
+          <div class="et">Health Camp &amp; E-Commerce Operations</div>
+          <div class="eo">Freelance / Independent</div>
+          <ul class="b">
+            <li>Coordinated logistics and scheduling for health camp operations; managed communication with doctors and organizers</li>
+            <li>Handled Meesho-based e-commerce operations including product listing and order processing workflows</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Projects</h2>
+
+        <div class="entry">
+          <div class="et">Nature Nexus — Event Management System</div>
+          <ul class="b">
+            <li>Built registration platform and QR-based entry system using HTML, CSS, JavaScript; deployed on Netlify</li>
+            <li>Managed <span class="m">300+</span> participants; handled <span class="m">600–800</span> daily users during peak event activity</li>
+            <li>Reduced manual work through structured digital workflows with zero major operational failures</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="et">Treasure Hunt — QR-Based Automation System</div>
+          <ul class="b">
+            <li>Designed multi-stage QR system for automated participant progression; eliminated manual tracking</li>
+            <li>Integrated digital validation into event flow, reducing dependency on manual coordination</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="et">LAN Event — Live Leaderboard System</div>
+          <ul class="b">
+            <li>Implemented real-time leaderboard with controlled update logic ensuring fair and transparent competition</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Freelance Work</h2>
+
+        <div class="entry">
+          <div class="et">Presentation Design — Educational Content</div>
+          <ul class="b">
+            <li>Designed PowerPoint presentations for YouTube-based educator; structured content for clarity and student engagement</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="et">Poster, Thumbnail &amp; Visual Content Design</div>
+          <ul class="b">
+            <li>Designed event posters and YouTube thumbnails/visual assets applying layout, typography, and brand consistency principles</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Achievements</h2>
+        <div class="ach">
+          <div class="t">NSS Control Room — Live Event Execution</div>
+          <div class="ds">Managed auditorium control room during live NSS program, coordinating AV cues with the stage</div>
+        </div>
+        <div class="ach">
+          <div class="t">300+ Registrations &nbsp;·&nbsp; 800 Daily Users</div>
+          <div class="ds">Live event system at scale — Nature Nexus event</div>
+        </div>
+        <div class="ach">
+          <div class="t">1st Position — School Science Exhibition</div>
+          <div class="ds">Arduino-based project, school level recognition</div>
+        </div>
+        <div class="ach">
+          <div class="t">General Secretary, Panchtatva &amp; TECHNICAL Head</div>
+          <div class="ds">Appointed to both roles on consistent execution performance</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Core Competencies</h2>
+        <div class="comp">
+          <div><div class="ch">Operations</div><div>End-to-End Event Mgmt · Workflow Automation · Process Improvement · Stakeholder Coordination</div></div>
+          <div><div class="ch">Finance &amp; Data</div><div>Financial Accounting · Tally ERP · Excel Analysis · E-Commerce Ops</div></div>
+          <div><div class="ch">Digital Execution</div><div>Frontend Development · QR System Design · Web Deployment · Visual Design</div></div>
+        </div>
+      </section>
+
+      <div class="info">
+        <div><div class="il">Portfolio</div><div class="iv">adnanresume.netlify.app</div></div>
+        <div><div class="il">Email</div><div class="iv">mohammadadnankhan.rak@gmail.com</div></div>
+        <div><div class="il">Location</div><div class="iv">Ghazipur, Uttar Pradesh, India</div></div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="foot">General Secretary, Panchtatva &nbsp;·&nbsp; B.Com (Hons.) &nbsp;·&nbsp; Delhi University &nbsp;·&nbsp; TECHNICAL &amp; Business Systems &nbsp;·&nbsp; NSS Volunteer &nbsp;·&nbsp; Digital Execution</div>
+
+</div>
+</body>
+</html>
